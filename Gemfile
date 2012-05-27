@@ -38,6 +38,10 @@ end
 group :production do
   gem 'pg', '0.12.2'
 end
+
+# Devise gem for authentication and the user model
+gem 'devise', '2.1.0'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

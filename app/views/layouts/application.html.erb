@@ -13,6 +13,9 @@
     <%= yield(:head) %>
   </head>
   <body>
+    <%# devise requires these flash messages to be configured %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <header class="navbar navbar-fixed-top">
       <nav class="navbar-inner">
         <div class="container">

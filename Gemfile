@@ -24,6 +24,7 @@ group :assets do
 end
 
 gem 'jquery-rails', '2.0.0'
+gem 'bootstrap-sass', '2.0.0'
 
 group :test do
   gem 'rspec-rails', '2.9.0'

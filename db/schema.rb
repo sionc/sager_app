@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120527213717) do
+ActiveRecord::Schema.define(:version => 20120527220117) do
+
+  create_table "hubs", :force => true do |t|
+    t.string   "mac_address"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "hubs", ["mac_address"], :name => "index_hubs_on_mac_address", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

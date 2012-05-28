@@ -24,9 +24,23 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+  # config.use_transactional_fixtures = false
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
+
+  # Devise
+  config.include Devise::TestHelpers, :type => :controller
+end
+#
+# http://stackoverflow.com/questions/10290286/factorygirl-why-does-attributes-for-omit-some-attributes
+# Factory girl doesn't include association attributes as part of FactoryGirl.attributes_for. That's unfortunate
+# but can be fixed. The code below removes the default attributes that tests are generally not interested in.
+#
+def factory_girl_build_attributes(*args)
+  FactoryGirl.build(*args).attributes.delete_if do |k, v|
+    ['id', 'created_at', 'updated_at'].member?(k)
+  end
 end

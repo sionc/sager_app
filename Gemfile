@@ -35,6 +35,10 @@ group :test do
   # TODO: add Spork eventually
 end
 
+group :development, :test do
+  gem 'factory_girl_rails', '3.3.0'
+end
+
 group :production do
   gem 'pg', '0.12.2'
 end

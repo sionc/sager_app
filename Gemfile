@@ -29,6 +29,7 @@ gem 'bootstrap-sass', '2.0.0'
 group :test do
   gem 'rspec-rails', '2.9.0'
   gem 'capybara', '1.1.2'
+  gem 'simplecov', :require => false
   # system-dependent guard notifier gems go here.
   # TODO:figure out how to make this cross-platform so that both mac and linux people can use it at the same
   # time

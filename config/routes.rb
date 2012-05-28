@@ -1,4 +1,6 @@
 SagerApp::Application.routes.draw do
+  resources :sensors
+
   resources :hubs
 
   devise_for :users

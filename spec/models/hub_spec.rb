@@ -25,7 +25,7 @@ describe Hub do
 
   it "should not be possible to insert the same mac address twice" do
     hub = FactoryGirl.create(:hub)
-    hub2 = FactoryGirl.build(:hub)
+    hub2 = FactoryGirl.build(:hub, :mac_address => hub.mac_address)
     hub2.save.should == false
   end
 

@@ -19,7 +19,7 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe HubsController do
-  describe "user is not signed in" do
+  context "user is not signed in" do
     it "should reject unauthorized access to all actions" do
       # A bit ghetto, sorry.
       get :index
@@ -39,7 +39,7 @@ describe HubsController do
     end
   end
 
-  describe "user is signed in" do
+  context "user is signed in" do
 
     before (:each) do
       @request.env["devise.mapping"] = Devise.mappings[:user]

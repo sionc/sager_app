@@ -15,7 +15,7 @@
 .content {
   background-color: #eee;
   padding: 20px;
-  margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+  margin: 0 -5px; /* negative indent the amount of the padding to maintain the grid system */
   -webkit-border-radius: 0 0 6px 6px;
   -moz-border-radius: 0 0 6px 6px;
   border-radius: 0 0 6px 6px;
@@ -23,3 +23,12 @@
   -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
   box-shadow: 0 1px 2px rgba(0,0,0,.15);
 }
+
+// Maintain cross browser min height functionality for content boxes
+// "Internet Explorer 6 is the only browser that recongizes the "* html _____"
+// selector and thus is the only browser to read the hard-set height."
+// --(http://davidwalsh.name/cross-browser-css-min-height)
+#main  { min-height:500px; } * html #main { height:500px; }
+#appliance-listing-container  { min-height:500px; } * html #appliance-listing-container { height:500px; }
+#usage-chart-container  { min-height:500px; } * html #usage-chart-container { height:500px; }
+

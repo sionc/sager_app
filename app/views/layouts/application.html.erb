@@ -8,14 +8,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <%= stylesheet_link_tag    "application", :media => "all" %>
-    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "application", "jquery-1.7.2.min" %>
     <%= csrf_meta_tags %>
     <%= yield(:head) %>
   </head>
   <body>
-    <%# devise requires these flash messages to be configured %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
     <header class="navbar navbar-fixed-top">
       <nav class="navbar-inner">
         <div class="container">
@@ -25,16 +22,10 @@
     </header>
     <div id="main" role="main">
       <div class="container">
-        <div class="content">
-           <div class="row">
-            <div class="span12">
-              <%= render 'layouts/messages' %>
-              <%= yield %>
-            </div>
-          </div>
-          <footer>
-          </footer>
-        </div>
+        <%= render 'layouts/messages' %>
+        <%= yield %>
+        <footer>
+        </footer>
       </div> <!--! end of .container -->
     </div> <!--! end of #main -->
   </body>

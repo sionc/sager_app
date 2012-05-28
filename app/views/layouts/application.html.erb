@@ -13,9 +13,6 @@
     <%= yield(:head) %>
   </head>
   <body>
-    <%# devise requires these flash messages to be configured %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
     <header class="navbar navbar-fixed-top">
       <nav class="navbar-inner">
         <div class="container">
@@ -25,16 +22,10 @@
     </header>
     <div id="main" role="main">
       <div class="container">
-        <div class="content">
-           <div class="row">
-            <div class="span12">
-              <%= render 'layouts/messages' %>
-              <%= yield %>
-            </div>
-          </div>
-          <footer>
-          </footer>
-        </div>
+        <%= render 'layouts/messages' %>
+        <%= yield %>
+        <footer>
+        </footer>
       </div> <!--! end of .container -->
     </div> <!--! end of #main -->
   </body>

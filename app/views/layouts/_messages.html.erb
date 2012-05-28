@@ -1,5 +1,9 @@
 <% flash.each do |name, msg| %>
-  <div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+   <%# devise requires these flash messages to be configured
+   --> These classes have been incorporated into twitter bootstrap's layout%>
+    <!--<p class="notice"><%#= notice %></p>-->
+    <!--<p class="alert"><%#= alert %></p>  -->
+  <div class="alert notice alert-<%= name == :notice ? "success" : "error" %>">
     <a class="close" data-dismiss="alert">×</a>
     <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
   </div>

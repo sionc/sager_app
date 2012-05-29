@@ -2,14 +2,6 @@ require 'spec_helper'
 
 describe "StaticPages" do
 
-  describe "Home page" do
-
-    it "should have the content 'Home'" do
-      visit '/static_pages/home'
-      page.should have_content('Home')
-    end
-  end
-
   describe "Help page" do
 
     it "should have the content 'Help'" do

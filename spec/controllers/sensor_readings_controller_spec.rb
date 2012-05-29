@@ -37,15 +37,17 @@ describe SensorReadingsController do
     end
 
     describe "POST create" do
+      # TODO: add interesting failure test cases
+
       describe "with valid params" do
         it "creates a new SensorReading" do
-
           sensor = FactoryGirl.create(:sensor)
           expect {
-            post :create, {:sensor_reading => {:watthours => 99, :sensor_id => sensor.id}}
+            post :create, {:sensor_reading => {:watthours => 99, :sensor_id => sensor.id, :mac_address => sensor.hub.mac_address}}
           }.to change(SensorReading, :count).by(1)
         end
       end
+
 
       describe "with invalid params" do
         it "assigns a newly created but unsaved sensor_reading as @sensor_reading" do

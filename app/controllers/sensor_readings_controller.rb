@@ -26,26 +26,28 @@ class SensorReadingsController < ApplicationController
     end
   end
 
-  # GET /sensor_readings/new
-  # GET /sensor_readings/new.json
-  # def new
-  #   @sensor_reading = SensorReading.new
-
-  #     respond_to do |format|
-  #       format.html # new.html.erb
-  #       format.json { render json: @sensor_reading }
-  #     end
-  #   end
-
-  # GET /sensor_readings/1/edit
-  # def edit
-  #   @sensor_reading = SensorReading.find(params[:id])
-  # end
-
   # POST /sensor_readings
   # POST /sensor_readings.json
   def create
-    @sensor_reading = SensorReading.new(params[:sensor_reading])
+
+    # This whole logic feels poorly eloquent, I'll research a more succint approach
+    @sensor_reading = SensorReading.new
+
+    # input validation
+    unless(params[:sensor_reading][:mac_address].nil? ||
+           params[:sensor_reading][:sensor_id].nil? ||
+           params[:sensor_reading][:watthours].nil?)
+
+      # given the mac address, we can find the hub
+      hub = Hub.find_by_mac_address(params[:sensor_reading][:mac_address])
+
+      # given the hub, the sensor_id  can be used to identify a single sensor
+      sensor = Sensor.find_by_id_and_hub_id params[:sensor_reading][:sensor_id], hub.id
+
+      # we then store the reading for that specific sensor
+      @sensor_reading = SensorReading.new(:sensor_id => sensor.id,
+                                          :watthours => params[:sensor_reading][:watthours])
+    end
 
     respond_to do |format|
       if @sensor_reading.save
@@ -57,32 +59,4 @@ class SensorReadingsController < ApplicationController
       end
     end
   end
-
-  # PUT /sensor_readings/1
-  # PUT /sensor_readings/1.json
-  # def update
-  #   @sensor_reading = SensorReading.find(params[:id])
-
-  # respond_to do |format|
-  #   if @sensor_reading.update_attributes(params[:sensor_reading])
-  #     format.html { redirect_to @sensor_reading, notice: 'Sensor reading was successfully updated.' }
-  #     format.json { head :no_content }
-  #   else
-  #     format.html { render action: "edit" }
-  #     format.json { render json: @sensor_reading.errors, status: :unprocessable_entity }
-  #   end
-  # end
-  # end
-
-  # DELETE /sensor_readings/1
-  # DELETE /sensor_readings/1.json
-  # def destroy
-  #   @sensor_reading = SensorReading.find(params[:id])
-  #   @sensor_reading.destroy
-
-  #   respond_to do |format|
-  #     format.html { redirect_to sensor_readings_url }
-  #     format.json { head :no_content }
-  #   end
-  # end
 end

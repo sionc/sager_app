@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Watthours:</b>
+  <%= @sensor_reading.watthours %>
+</p>
+
+<p>
+  <b>Sensor:</b>
+  <%= @sensor_reading.sensor_id %>
+</p>
+
+
+<%# <%= link_to 'Edit', edit_sensor_reading_path(@sensor_reading) %1> | %>
+<%= link_to 'Back', sensor_readings_path %>

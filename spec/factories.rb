@@ -35,4 +35,12 @@ FactoryGirl.define do
     # sugar for association with hub factory
     hub
   end
+
+  # Sensor_reading factory
+  factory :sensor_reading do
+    watthours 1337
+
+    # sugar for association with sensor factory
+    sensor
+  end
 end

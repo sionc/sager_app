@@ -12,4 +12,5 @@ class Sensor < ActiveRecord::Base
   #
   belongs_to :hub
   validates_presence_of :hub
+  has_many :sensor_readings
 end

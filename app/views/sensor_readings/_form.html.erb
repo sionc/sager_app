@@ -1,0 +1,25 @@
+<%= form_for(@sensor_reading) do |f| %>
+  <% if @sensor_reading.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sensor_reading.errors.count, "error") %> prohibited this sensor_reading from being saved:</h2>
+
+      <ul>
+      <% @sensor_reading.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :watthours %><br />
+    <%= f.number_field :watthours %>
+  </div>
+  <div class="field">
+    <%= f.label :sensor_id %><br />
+    <%= f.number_field :sensor_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

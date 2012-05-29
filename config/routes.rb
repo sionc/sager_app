@@ -1,9 +1,9 @@
 SagerApp::Application.routes.draw do
-  resources :sensors
-
-  resources :hubs
 
   devise_for :users
+  resources :hubs
+  resources :sensors
+  resources :sensor_readings, :only => [:index, :show, :create]
 
   root :to => "static_pages#home"
 

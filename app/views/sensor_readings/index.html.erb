@@ -12,7 +12,7 @@
 <% @sensor_readings.each do |sensor_reading| %>
   <tr>
     <td><%= sensor_reading.watthours %></td>
-    <td><%= sensor_reading.sensor_id %></td>
+    <td><%= sensor_reading.sensor_local_id %></td>
     <td><%= link_to 'Show', sensor_reading %></td>
     <%# <td><%= link_to 'Edit', edit_sensor_reading_path(sensor_reading) %1></td> %>
     <%# <td><%= link_to 'Destroy', sensor_reading, confirm: 'Are you sure?', method: :delete %1></td> %>

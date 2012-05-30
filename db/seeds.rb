@@ -70,11 +70,11 @@ sensors = [sensor_1, sensor_2, sensor_3, sensor_4, sensor_5]
 sensors.each do |sensor|
   puts "Creating readings for sensor " + sensor.local_id.to_s
   (1..60).each do |i|
-    min = i*100
-    max = (i+1)*100
-    SensorReading.create(:watthours => rand(min..max),
-                         :sensor_local_id => sensor.local_id,
-                         :created_at => DateTime.now - i.minutes)
+    min = 50
+    max = 150
+    reading = SensorReading.create(:watthours => rand(min..max),
+                         :sensor_local_id => sensor.local_id)
+    reading.created_at = DateTime.now - i.minutes
   end
 end
 

@@ -69,8 +69,8 @@ $(document).ready(function() {
 
     // Use portlets to display appliances
     $(function() {
-		$( "#appliance-listing-container" ).sortable({
-			connectWith: "#appliance-listing-container"
+		$( "#device-list-container" ).sortable({
+			connectWith: "#device-list-container"
 		});
 
 		$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
@@ -85,6 +85,6 @@ $(document).ready(function() {
 			$( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
 		});
 
-		$( "#appliance-listing-container" ).disableSelection();
+		$( "#device-list-container" ).disableSelection();
 	});
 });

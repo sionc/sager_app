@@ -1,0 +1,26 @@
+<div class="content" id="device-list-container">
+  <% if @sensors.empty? then %>
+      <p>No devices found</p>
+  <% else %>
+      <div class="portlet">
+        <div class="portlet-header"><%= @sensors.first.name unless @sensors.first.nil? %></div>
+        <div class="portlet-content">No data found</div>
+      </div>
+      <div class="portlet">
+        <div class="portlet-header"><%= @sensors.second.name unless @sensors.second.nil? %></div>
+        <div class="portlet-content">No data found</div>
+      </div>
+      <div class="portlet">
+        <div class="portlet-header"><%= @sensors.third.name unless @sensors.third.nil? %></div>
+        <div class="portlet-content">No data found</div>
+      </div>
+      <div class="portlet">
+        <div class="portlet-header"><%= @sensors.fourth.name unless @sensors.fourth.nil? %></div>
+        <div class="portlet-content">No data found</div>
+      </div>
+      <div class="portlet">
+        <div class="portlet-header"><%= @sensors.fifth.name unless @sensors.fifth.nil? %></div>
+        <div class="portlet-content">No data found</div>
+      </div>
+  <% end %>
+</div>

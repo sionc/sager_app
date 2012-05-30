@@ -1,4 +1,7 @@
 FactoryGirl.define do
+  #
+  # Sequences
+  #
   sequence :email do |n|
     "person#{n}@contoso.com"
   end
@@ -12,6 +15,14 @@ FactoryGirl.define do
   sequence :mac_address do |n|
     "08:00:27:EA:03:A#{n}"
   end
+
+  sequence :sensor_local_id do |n|
+    n
+  end
+
+  #
+  # Factories
+  #
 
   # User factory
   factory :user do
@@ -31,6 +42,7 @@ FactoryGirl.define do
   # Sensor factory
   factory :sensor do
     name "MyString"
+    local_id = FactoryGirl.generate :sensor_local_id
 
     # sugar for association with hub factory
     hub

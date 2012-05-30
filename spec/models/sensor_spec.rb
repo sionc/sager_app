@@ -26,4 +26,21 @@ describe Sensor do
     sensor.should_not be_valid
     sensor.save.should == false
   end
+
+  it 'should be able to have same local id across hubs' do
+    hub1 = FactoryGirl.create(:hub)
+    hub2 = FactoryGirl.create(:hub)
+    sensor1 = FactoryGirl.create(:sensor, :hub => hub1)
+    sensor2 = FactoryGirl.build(:sensor, :local_id => sensor1.local_id, :hub => hub2)
+    sensor2.should be_valid
+    sensor2.save.should == true
+  end
+
+  it 'should not have same local id for one hub' do
+    hub1 = FactoryGirl.create(:hub)
+    sensor1 = FactoryGirl.create(:sensor, :hub => hub1)
+    sensor2 = FactoryGirl.build(:sensor, :local_id => sensor1.local_id, :hub => hub1)
+    sensor2.should_not be_valid
+    sensor2.save.should == false
+  end
 end

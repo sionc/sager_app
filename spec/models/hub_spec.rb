@@ -29,6 +29,16 @@ describe Hub do
     hub2.save.should == false
   end
 
+  it 'should consider lower and upper case mac addresses the same' do
+    pending 'to be implemented'
+    attribs = FactoryGirl.attributes_for(:hub)
+    attribs[:mac_address].downcase!
+    hub = FactoryGirl.create(:hub, :mac_address => attribs[:mac_address])
+    hub2 = FactoryGirl.build(:hub, :mac_address => attribs[:mac_address].upcase)
+    hub2.should_not be_valid
+    hub2.save.should == false
+  end
+
   describe "associations" do
     it "should not belong to more than one user" do
       user = FactoryGirl.create(:user)

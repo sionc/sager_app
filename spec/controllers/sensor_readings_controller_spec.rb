@@ -43,7 +43,7 @@ describe SensorReadingsController do
         it "creates a new SensorReading" do
           sensor = FactoryGirl.create(:sensor)
           expect {
-            post :create, {:sensor_reading => {:watthours => 99, :sensor_id => sensor.id, :mac_address => sensor.hub.mac_address}}
+            post :create, {:sensor_reading => {:watthours => 99, :local_id => sensor.local_id, :mac_address => sensor.hub.mac_address}}
           }.to change(SensorReading, :count).by(1)
         end
       end

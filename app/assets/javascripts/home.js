@@ -1,90 +1,84 @@
-$(document).ready(function() {
-	var seriesOptions = [],
-		yAxisOptions = [],
-		seriesCounter = 0,
-		names = ['MSFT', 'AAPL', 'GOOG'],
-		colors = Highcharts.getOptions().colors;
+var chart;
+$(function() {
+    if($("#weekly-usage-chart").length == 0)
+        return;
 
-	$.each(names, function(i, name) {
-
-		$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename='+ name.toLowerCase() +'-c.json&callback=?'
-            , function(data) {
-
-			seriesOptions[i] = {
-				name: name,
-				data: data
-			};
-
-			// As we're loading the data asynchronously, we don't know what order it will arrive. So
-			// we keep a counter and create the chart when all the data is loaded.
-			seriesCounter++;
-
-			if (seriesCounter == names.length) {
-				createChart();
+	chart = new Highcharts.Chart({
+		chart: {
+			renderTo: 'weekly-usage-chart',
+			type: 'bar',
+            backgroundColor: 'transparent',
+            borderColor: '#DDD',
+            borderWidth: '1',
+            plotBackgroundColor: 'transparent'
+		},
+		title: {
+			text: 'Energy Consumption (kwh)'
+		},
+		xAxis: {
+			categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+		},
+		yAxis: {
+			min: 0,
+			title: {
+				text: ''
 			}
-		});
+		},
+		legend: {
+			backgroundColor: 'transparent',
+            reversed: true
+		},
+		tooltip: {
+			formatter: function() {
+				return ''+
+					this.series.name +': '+ this.y +' kwh';
+			}
+		},
+		plotOptions: {
+			series: {
+				stacking: 'normal'
+			}
+		},
+			series: [{
+            name: 'Television',
+			data: [5, 3, 4, 7, 2]
+		}, {
+			name: 'Desktop',
+			data: [2, 2, 3, 2, 1]
+		}, {
+			name: 'Space Heater',
+			data: [3, 4, 4, 2, 5]
+		},{
+            name: 'Washer',
+			data: [5, 3, 4, 7, 2]
+		}, {
+			name: 'Dryer',
+			data: [2, 2, 3, 2, 1]
+		}]
 	});
+});
 
+// Use portlets to display appliances
+$(function() {
+    var container = "#device-list-container";
+    if($(container).length == 0)
+        return;
 
+    $( container ).sortable({
+        connectWith: container
+    });
 
-	// create the chart when all data is loaded
-	function createChart() {
+    $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+        .find( ".portlet-header" )
+            .addClass( "ui-widget-header ui-corner-all" )
+            .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
+            .end()
+        .find( ".portlet-content" );
 
-		chart = new Highcharts.StockChart({
-		    chart: {
-		        renderTo: 'usage-chart'
-		    },
+    $( ".portlet-header .ui-icon" ).click(function() {
+        $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
+        $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
+    });
 
-		    rangeSelector: {
-		        selected: 4
-		    },
-
-		    yAxis: {
-		    	labels: {
-		    		formatter: function() {
-		    			return (this.value > 0 ? '+' : '') + this.value + '%';
-		    		}
-		    	},
-		    	plotLines: [{
-		    		value: 0,
-		    		width: 2,
-		    		color: 'silver'
-		    	}]
-		    },
-
-		    plotOptions: {
-		    	series: {
-		    		compare: 'percent'
-		    	}
-		    },
-
-		    tooltip: {
-		    	pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-		    	valueDecimals: 2
-		    },
-
-		    series: seriesOptions
-		});
-	}
-
-    // Use portlets to display appliances
-    $(function() {
-		$( "#device-list-container" ).sortable({
-			connectWith: "#device-list-container"
-		});
-
-		$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
-			.find( ".portlet-header" )
-				.addClass( "ui-widget-header ui-corner-all" )
-				.prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
-				.end()
-			.find( ".portlet-content" );
-
-		$( ".portlet-header .ui-icon" ).click(function() {
-			$( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
-			$( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
-		});
-
-		$( "#device-list-container" ).disableSelection();
-	});
+    $(container).disableSelection();
 });

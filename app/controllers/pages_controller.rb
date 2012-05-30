@@ -4,6 +4,9 @@ class PagesController < ApplicationController
     @sensors = hub.sensors unless hub.nil?
   end
 
-  def help
+  def about
+  end
+
+  def trends
   end
 end

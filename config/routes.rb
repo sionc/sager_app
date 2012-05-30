@@ -8,8 +8,8 @@ SagerApp::Application.routes.draw do
   root :to => "pages#home"
 
   get "pages/home"
-  get "pages/help"
   get "pages/about"
+  get "pages/trends"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

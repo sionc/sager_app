@@ -68,7 +68,7 @@ sensor_5 = Sensor.create(:name => "Dryer",
 puts "Creating sensor_readings..."
 sensors = [sensor_1, sensor_2, sensor_3, sensor_4, sensor_5]
 sensors.each do |sensor|
-  puts "Creating readings for sensor " + sensor.id.to_s
+  puts "Creating readings for sensor " + sensor.local_id.to_s
   (1..60).each do |i|
     min = i*100
     max = (i+1)*100

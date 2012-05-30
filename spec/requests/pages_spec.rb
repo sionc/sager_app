@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe "StaticPages" do
+describe "Pages" do
 
   describe "Help page" do
 
     it "should have the content 'Help'" do
-      visit '/static_pages/help'
+      visit '/pages/help'
       page.should have_content('Help')
     end
   end
@@ -13,7 +13,7 @@ describe "StaticPages" do
    describe "About page" do
 
     it "should have the content 'About Us'" do
-      visit '/static_pages/about'
+      visit '/pages/about'
       page.should have_content('About Us')
     end
   end

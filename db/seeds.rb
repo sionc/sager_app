@@ -74,7 +74,8 @@ sensors.each do |sensor|
     max = 150
     reading = SensorReading.create(:watthours => rand(min..max),
                          :sensor_local_id => sensor.local_id)
-    reading.created_at = DateTime.now - i.minutes
+    reading.created_at = Time.now.utc - i.minutes
+    reading.save!
   end
 end
 

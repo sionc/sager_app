@@ -1,26 +1,7 @@
 <%= javascript_include_tag "highstock" %>
 <div class="row-fluid">
   <div class="span3">
-    <div class="content" id= "appliance-listing-container">
-      <!--<div class="column">-->
-        <div class="portlet">
-          <div class="portlet-header">Monitor 1</div>
-          <div class="portlet-content">No data found</div>
-        </div>
-        <div class="portlet">
-          <div class="portlet-header">Monitor 2</div>
-          <div class="portlet-content">No data found</div>
-        </div>
-        <div class="portlet">
-          <div class="portlet-header">Monitor 3</div>
-          <div class="portlet-content">No data found</div>
-        </div>
-        <div class="portlet">
-          <div class="portlet-header">Monitor 4</div>
-          <div class="portlet-content">No data found</div>
-        </div>
-      <!--</div>-->
-    </div>
+    <%= render 'device_list' %>
   </div>
   <div class="span9">
     <div class="content" id= "usage-chart-container">

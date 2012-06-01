@@ -58,20 +58,14 @@ sensor_2 = Sensor.create(:name => "Desktop",
 sensor_3 = Sensor.create(:name => "Space Heater",
                          :hub_id => hub_1.id,
                          :local_id => 3)
-sensor_4 = Sensor.create(:name => "Washer",
-                         :hub_id => hub_1.id,
-                         :local_id => 4)
-sensor_5 = Sensor.create(:name => "Dryer",
-                         :hub_id => hub_1.id,
-                         :local_id => 5)
 
 puts "Creating sensor_readings..."
-sensors = [sensor_1, sensor_2, sensor_3, sensor_4, sensor_5]
+sensors = [sensor_1, sensor_2, sensor_3]
 sensors.each do |sensor|
   puts "Creating readings for sensor " + sensor.local_id.to_s
-  (1..60).each do |i|
+  (1..60*24*7).each do |i|
     min = 50
-    max = 150
+    max = 200
     reading = SensorReading.create(:watthours => rand(min..max),
                          :sensor_local_id => sensor.local_id)
     reading.created_at = Time.now.utc - i.minutes

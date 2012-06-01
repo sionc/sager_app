@@ -17,6 +17,30 @@ class Sensor < ActiveRecord::Base
   validates_presence_of :hub
   has_many :sensor_readings, :foreign_key => :sensor_local_id, :primary_key => :local_id
 
+  # Add virtual attributes to JSON hash
+  def as_json(options = { })
+    # just in case someone says as_json(nil) and bypasses
+    # our default...
+    super((options || { }).merge({
+        :methods => [:current_hourly_kwh_usage, :current_daily_kwh_usage, :current_weekly_kwh_usage]
+    }))
+  end
+
+  # Get the kwh usage for the current hour
+  def current_hourly_kwh_usage
+    hourly_kwh_usage_on(Time.now.utc.to_date, Time.now.utc.hour)
+  end
+
+  # Get the kwh usage for the current day
+  def current_daily_kwh_usage
+    daily_kwh_usage_on(Time.now.utc.to_date)
+  end
+
+  # Get the kwh usage for the past 7 days
+  def current_weekly_kwh_usage
+    weekly_kwh_usage_until(Time.now.utc.to_date)
+  end
+
   # Calculate the total kwh usage for a given date (UTC) and hour (range = 0..23)
   def hourly_kwh_usage_on(date, hour)
     raise "Invalid argument: Please use a non negative value for hour" if hour < 0
@@ -25,7 +49,7 @@ class Sensor < ActiveRecord::Base
     lower = date + hour.hour
     upper = lower + 1.hour
 
-    raise "Invalid argument: Please use a DateTime value that is not in the future" if (lower > Time.now.utc)
+    return 0.0 unless lower < Time.now.utc
 
     readings = self.sensor_readings.where(:created_at => lower..upper)
 
@@ -36,6 +60,7 @@ class Sensor < ActiveRecord::Base
 
     average_watthours_usage = cumulative_watthours_usage/60
     kwh_usage = average_watthours_usage/1000
+    kwh_usage
   end
 
   # Calculate the total kwh usage for a given date (UTC)

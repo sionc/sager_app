@@ -49,7 +49,7 @@ describe Sensor do
     sensor1 = FactoryGirl.create(:sensor, :hub => hub1)
 
     time = Time.utc(2012, 1, 1, 11, 58)
-    num_readings = 30
+    num_readings = 2
     t = time
     (1..num_readings).each do |i|
       reading = FactoryGirl.create(:sensor_reading, :sensor => sensor1)
@@ -68,8 +68,8 @@ describe Sensor do
     sensor1 = FactoryGirl.create(:sensor, :hub => hub1)
 
     time = Time.utc(2012, 1, 1, 11, 58)
-    num_hours = 8
-    num_readings = 30
+    num_hours = 2
+    num_readings = 2
     t = time
     (0..num_hours-1).each do |i|
       (0..num_readings-1).each do |j|
@@ -92,8 +92,8 @@ describe Sensor do
 
     time = Time.utc(2012, 1, 10, 11, 58)
     num_days = 7
-    num_hours = 8
-    num_readings = 30
+    num_hours = 2
+    num_readings = 2
     t = time
 
     (0..num_days-1).each do |i|
@@ -113,5 +113,5 @@ describe Sensor do
     kwh_usage_per_hour = average_usage_per_hour/1000
     kwh_usage_per_day =  kwh_usage_per_hour * num_hours
     sensor1.weekly_kwh_usage_until(time.to_date).should == (kwh_usage_per_day * num_days)
-  end
+   end
 end

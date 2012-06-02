@@ -33,7 +33,8 @@ group :test do
   # system-dependent guard notifier gems go here.
   # TODO:figure out how to make this cross-platform so that both mac and linux people can use it at the same
   # time
-  # TODO: add Spork eventually
+  gem 'guard-spork', '0.3.2'
+  gem 'spork', '0.9.0'
 end
 
 group :development, :test do

@@ -16,4 +16,5 @@ class User < ActiveRecord::Base
   # Associations
   #
   has_one :hub
+  has_many :sensors, :through => :hub
 end

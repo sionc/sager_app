@@ -183,6 +183,7 @@ describe SensorsController do
         response.should redirect_to(sensors_url)
       end
     end
+
   end
 
 end

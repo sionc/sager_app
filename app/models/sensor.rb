@@ -17,32 +17,48 @@ class Sensor < ActiveRecord::Base
   validates_presence_of :hub
   has_many :sensor_readings, :foreign_key => :sensor_local_id, :primary_key => :local_id
 
+
+  # The following section needs to move to a controller or helper method
+  # -----------------------------------------------------------
   # Add virtual attributes to JSON hash
   def as_json(options = { })
-    # just in case someone says as_json(nil) and bypasses
-    # our default...
     super((options || { }).merge({
-        :methods => [:current_hourly_kwh_usage, :current_daily_kwh_usage, :current_weekly_kwh_usage]
+        :methods => [:current_hour_kwh_usage,
+                     :current_day_kwh_usage,
+                     :current_week_kwh_usage,
+                     :last_7_day_kwh_usage_by_day]
     }))
   end
 
-  # Get the kwh usage for the current hour
-  def current_hourly_kwh_usage
-    hourly_kwh_usage_on(Time.now.utc.to_date, Time.now.utc.hour)
+  # Get the total kwh usage for the current hour
+  def current_hour_kwh_usage
+    total_hour_kwh_usage_on(Time.now.utc.to_date, Time.now.utc.hour).round(2)
   end
 
-  # Get the kwh usage for the current day
-  def current_daily_kwh_usage
-    daily_kwh_usage_on(Time.now.utc.to_date)
+  # Get the total kwh usage for the current day
+  def current_day_kwh_usage
+    total_day_kwh_usage_on(Time.now.utc.to_date).round(2)
   end
 
-  # Get the kwh usage for the past 7 days
-  def current_weekly_kwh_usage
-    weekly_kwh_usage_until(Time.now.utc.to_date)
+  # Get the total kwh usage for the last 7 days
+  def current_week_kwh_usage
+    total_week_kwh_usage_until(Time.now.utc.to_date).round(2)
   end
+
+  # Get the kwh usage for each day for the last 7 days
+  def last_7_day_kwh_usage_by_day
+     usage_data = []
+      Time.now.utc.to_date.downto(6.days.ago.utc.to_date).each do |date|
+        usage_data << total_day_kwh_usage_on(date).round(2)
+      end
+      usage_data
+  end
+
+  # -----------------------------------------------------------
+
 
   # Calculate the total kwh usage for a given date (UTC) and hour (range = 0..23)
-  def hourly_kwh_usage_on(date, hour)
+  def total_hour_kwh_usage_on(date, hour)
     raise "Invalid argument: Please use a non negative value for hour" if hour < 0
     raise "Invalid argument: Please use a value that is less than or equal to 23 for hour" if hour > 23
 
@@ -64,24 +80,24 @@ class Sensor < ActiveRecord::Base
   end
 
   # Calculate the total kwh usage for a given date (UTC)
-  def daily_kwh_usage_on(date)
+  def total_day_kwh_usage_on(date)
     raise "Invalid argument: Please use a date value that is not in the future" if (date > Time.now.utc.to_date)
 
     cumulative_hourly_kwh_usage = 0.0
     (0..23).each do |i|
-      cumulative_hourly_kwh_usage += self.hourly_kwh_usage_on(date, i)
+      cumulative_hourly_kwh_usage += self.total_hour_kwh_usage_on(date, i)
       #puts cumulative_hourly_kwh_usage.to_s
     end
     cumulative_hourly_kwh_usage
   end
 
   # Calculate the total kwh usage for the week until the specified date (UTC)
-  def weekly_kwh_usage_until(date)
+  def total_week_kwh_usage_until(date)
     raise "Invalid argument: Please use a date value that is not in the future" if (date > Time.now.utc.to_date)
 
     cumulative_daily_kwh_usage = 0.0
-    (0..6).each do |i|
-      cumulative_daily_kwh_usage += self.daily_kwh_usage_on(date - i.day)
+    (0..date.wday).each do |i|
+      cumulative_daily_kwh_usage += self.total_day_kwh_usage_on(date - i.day)
     end
     cumulative_daily_kwh_usage
   end

@@ -1,4 +1,5 @@
 var sensors = new Array;
+var usage = new Array;
 var daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 var monthsInAYear = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -6,7 +7,7 @@ var monthsInAYear = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Se
 var getSensorData = function() {
     $.ajax({
         type: 'GET',
-        url: '/sensors/',
+        url: 'pages/user_sensors/',
         async: false,
         dataType: 'json',
         success: parseSensorData
@@ -18,23 +19,72 @@ var parseSensorData = function(sensorData){
     if(sensorData.sensors.length == 0)
         return;
 
+    var numSensors = sensorData.sensors.length;
     var i = 0;
-    for(i = 0; i < sensorData.sensors.length; i++){
-        var obj = jQuery.parseJSON(JSON.stringify(sensorData.sensors[i]));
-        sensors.push(obj);
+    for(i = 0; i < numSensors; i++){
+        var sensorObj = jQuery.parseJSON(JSON.stringify(sensorData.sensors[i]));
+        sensors.push(sensorObj);
     }
 };
 
 // Use portlets to display appliances
 var listDevices = function() {
-    var container = "#device-list-container";
-    if($(container).length == 0)
+    var container = "#sensor-list-container";
+
+    // If another page is loaded...
+    if($(container).length == 0){
         return;
+    }
+
+    // If no sensors are found...
+    if(sensors.length == 0){
+        $("</h6>No sensors detected</h6>").appendTo(container);
+        return;
+    }
 
     $( container ).sortable({
         connectWith: container
     });
 
+     // Create portlets for each sensor
+    var i = 0;
+    for(i = 0; i < sensors.length; i++) {
+        var deviceContainer = $("<div></div>").appendTo(container).addClass("portlet");
+
+        // Add device header
+        var deviceHeader = $("<div></div>").appendTo(deviceContainer).addClass("portlet-header");
+        $("<h5>"+sensors[i].name+"</h5>").appendTo(deviceHeader);
+
+        // Add device content
+        var deviceContent = $("<div></div>").appendTo(deviceContainer).addClass("portlet-content");
+        var deviceContentTable = $("<table></table>").appendTo(deviceContent).addClass("table table-condensed");
+
+        // Add headers for device content table
+        var deviceContentTableHeader = $("<thead></thead>").appendTo(deviceContentTable);
+        var deviceContentTableHeaderRow = $("<tr></tr>").appendTo(deviceContentTableHeader);
+        $("<th><h6>Duration<h6></th>").appendTo(deviceContentTableHeaderRow);
+        $("<th><h6>Energy<h6></th>").appendTo(deviceContentTableHeaderRow);
+        $("<th><h6>Cost<h6></th>").appendTo(deviceContentTableHeaderRow);
+
+        // Add first row of the device content table
+        var deviceContentTableBody = $("<tbody></tbody>").appendTo(deviceContentTable);
+        var deviceContentTableBodyRow1 = $("<tr></tr>").appendTo(deviceContentTableBody);
+        var energy_today = sensors[i].current_day_kwh_usage.toFixed(2);
+        var cost_today = (energy_today * 0.11).toFixed(2);
+        $("<td><p>Today</p></td>").appendTo(deviceContentTableBodyRow1);
+        $("<td><p>"+energy_today+"kWh</p></td>").appendTo(deviceContentTableBodyRow1);
+        $("<td><p>$"+cost_today+"</p></td>").appendTo(deviceContentTableBodyRow1);
+
+        // Add second row of the device content table
+        var deviceContentTableBodyRow2 = $("<tr></tr>").appendTo(deviceContentTableBody);
+        var energy_7days = sensors[i].current_week_kwh_usage.toFixed(2);
+        var cost_7days = (energy_7days * 0.11).toFixed(2);
+        $("<td><p>This Week</p></td>").appendTo(deviceContentTableBodyRow2);
+        $("<td><p>"+energy_7days+" kWh</p></td>").appendTo(deviceContentTableBodyRow2);
+        $("<td><p>$"+cost_7days+"</p></td>").appendTo(deviceContentTableBodyRow2);
+    }
+
+    // Add classes to portlets
     $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
         .find( ".portlet-header" )
             .addClass( "ui-widget-header ui-corner-all" )
@@ -110,7 +160,7 @@ var displayWeeklyUsageChart = function() {
     for (i = 0; i < sensors.length; i++) {
         options.series.push({
             name: sensors[i].name,
-            data: [1,1,1,1,1,1,1]
+            data: sensors[i].last_7_day_kwh_usage_by_day
         });
     }
 

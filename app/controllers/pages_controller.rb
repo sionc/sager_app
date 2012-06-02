@@ -5,13 +5,20 @@ class PagesController < ApplicationController
   before_filter :authenticate_user!
 
   def home
-    hub = Hub.find_by_mac_address("01:23:45:67:89:ab")
-    @sensors = hub.sensors unless hub.nil?
   end
 
   def about
   end
 
   def trends
+  end
+
+  # GET /pages/user_sensors.json
+  def user_sensors
+    @user_sensors = current_user.sensors
+
+    respond_to do |format|
+      format.json { render json: {:sensors => @user_sensors} }
+    end
   end
 end

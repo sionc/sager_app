@@ -6,6 +6,7 @@ gem 'bootstrap-sass', '2.0.0'
 gem 'devise', '2.1.0'
 gem 'execjs'
 gem 'therubyracer'
+gem 'cancan', '1.6.7'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

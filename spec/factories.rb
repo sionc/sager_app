@@ -55,4 +55,11 @@ FactoryGirl.define do
     # sugar for association with sensor factory
     sensor
   end
+
+  # Role factory
+  FactoryGirl.define do
+    factory :role do
+      name "MyString"
+    end
+  end
 end

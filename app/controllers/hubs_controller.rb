@@ -5,10 +5,16 @@ class HubsController < ApplicationController
   #
   before_filter :authenticate_user!
 
+  #
+  # CanCan
+  #
+  load_and_authorize_resource
+
   # GET /hubs
   # GET /hubs.json
   def index
-    @hubs = Hub.all
+    # @hubs = Hub.all
+    @hubs.accessible_by(current_ability)
 
     respond_to do |format|
       format.html # index.html.erb

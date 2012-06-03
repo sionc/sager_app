@@ -4,10 +4,15 @@ class SensorReadingsController < ApplicationController
   #
   before_filter :authenticate_user!, :except => [:create]
 
+  #
+  # CanCan
+  #
+  load_and_authorize_resource :except => [:create]
+
   # GET /sensor_readings
   # GET /sensor_readings.json
   def index
-    @sensor_readings = SensorReading.all
+    @sensor_readings = SensorReading.accessible_by(current_ability)
 
     respond_to do |format|
       format.html # index.html.erb

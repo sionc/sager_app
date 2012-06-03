@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'cancan/matchers'
 
 describe Hub do
 
@@ -48,16 +49,4 @@ describe Hub do
       hub2.save.should == false
     end
   end
-
-  # context "when mac_address empty" do
-  #   @hub.mac_address = ""
-  #   it { should_not be_valid }
-  #   specify { @hub.save.should == false }
-  # end
-
-  # context "when user_id not set" do
-  #   @hub.user_id = nil
-  #   it { should_not be_valid }
-  #   specify { @hub.save.should == false }
-  # end
 end

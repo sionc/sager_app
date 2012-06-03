@@ -22,6 +22,17 @@ ActiveRecord::Schema.define(:version => 20120603081822) do
 
   add_index "hubs", ["mac_address"], :name => "index_hubs_on_mac_address", :unique => true
 
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "roles_users", :id => false, :force => true do |t|
+    t.integer "role_id"
+    t.integer "user_id"
+  end
+
   create_table "sensor_readings", :force => true do |t|
     t.integer  "watthours",  :default => 0, :null => false
     t.integer  "sensor_id",                 :null => false

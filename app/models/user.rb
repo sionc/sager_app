@@ -17,4 +17,10 @@ class User < ActiveRecord::Base
   #
   has_one :hub
   has_many :sensors, :through => :hub
+  has_and_belongs_to_many :roles
+
+  # fetches role of user
+  def role?(role)
+    return !!self.roles.find_by_name(role.to_s)
+  end
 end

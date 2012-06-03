@@ -5,10 +5,15 @@ class SensorsController < ApplicationController
   #
   before_filter :authenticate_user!
 
+  #
+  # CanCan
+  #
+  load_and_authorize_resource
+
   # GET /sensors
   # GET /sensors.json
   def index
-    @sensors = Sensor.all
+    @sensor = Sensor.accessible_by(current_ability)
 
     respond_to do |format|
       format.html # index.html.erb

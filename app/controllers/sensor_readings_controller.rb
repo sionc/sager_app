@@ -4,10 +4,15 @@ class SensorReadingsController < ApplicationController
   #
   before_filter :authenticate_user!, :except => [:create]
 
+  #
+  # CanCan
+  #
+  load_and_authorize_resource :except => [:create]
+
   # GET /sensor_readings
   # GET /sensor_readings.json
   def index
-    @sensor_readings = SensorReading.all
+    @sensor_readings = SensorReading.accessible_by(current_ability)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -48,7 +53,7 @@ class SensorReadingsController < ApplicationController
       logger.debug "sensor attributes: #{sensor.attributes.inspect}"
 
       # we then store the reading for that specific sensor
-      @sensor_reading = SensorReading.new(:sensor_local_id => sensor.local_id,
+      @sensor_reading = SensorReading.new(:sensor_id => sensor.id,
                                           :watthours => params[:sensor_reading][:watthours])
       logger.debug "sensor_reading attributes: #{@sensor_reading.attributes.inspect}"
     end

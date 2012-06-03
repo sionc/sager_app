@@ -13,7 +13,7 @@
 <% @sensor_readings.each do |sensor_reading| %>
   <tr>
     <td><%= sensor_reading.watthours %></td>
-    <td><%= sensor_reading.sensor_local_id %></td>
+    <td><%= sensor_reading.sensor_id %></td>
     <td><%= sensor_reading.created_at.in_time_zone('Pacific Time (US & Canada)').to_s(:long_ordinal) %></td>
     <%# <td><%= link_to 'Show', sensor_reading %1></td> %>
     <%# <td><%= link_to 'Edit', edit_sensor_reading_path(sensor_reading) %1></td> %>

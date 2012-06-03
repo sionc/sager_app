@@ -15,7 +15,7 @@ class Sensor < ActiveRecord::Base
   #
   belongs_to :hub
   validates_presence_of :hub
-  has_many :sensor_readings, :foreign_key => :sensor_local_id, :primary_key => :local_id
+  has_many :sensor_readings
 
 
   # The following section needs to move to a controller or helper method

@@ -43,11 +43,34 @@ describe SensorReadingsController do
         it "creates a new SensorReading" do
           sensor = FactoryGirl.create(:sensor)
           expect {
-            post :create, {:sensor_reading => {:watthours => 99, :local_id => sensor.local_id, :mac_address => sensor.hub.mac_address}}
+            post :create, { :sensor_reading => { :watthours => 99,
+                                                 :local_id => sensor.local_id,
+                                                 :mac_address => sensor.hub.mac_address } }
           }.to change(SensorReading, :count).by(1)
         end
       end
 
+      it "should lead to 2 different hubs with two different MACs" do
+        hub = FactoryGirl.create(:hub)
+        hub2 = FactoryGirl.create(:hub)
+        sensor = FactoryGirl.create(:sensor, :hub => hub)
+        sensor2 = FactoryGirl.create(:sensor, :hub => hub2)
+
+        post :create, { :sensor_reading => { :watthours => 1,
+                                             :local_id => sensor.local_id,
+                                             :mac_address => hub.mac_address } }
+        sensor_reading = SensorReading.last
+        post :create, { :sensor_reading => { :watthours => 2,
+                                             :local_id => sensor2.local_id,
+                                             :mac_address => hub2.mac_address } }
+        sensor_reading2 = SensorReading.last
+
+        # being extra nutty careful here
+        sensor_reading.sensor.should_not equal(sensor_reading2.sensor)
+        sensor_reading.sensor.should == sensor
+        sensor_reading2.sensor.should == sensor2
+        sensor_reading.sensor.hub.should_not == sensor_reading2.sensor.hub
+      end
 
       describe "with invalid params" do
         it "assigns a newly created but unsaved sensor_reading as @sensor_reading" do

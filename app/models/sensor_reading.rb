@@ -3,6 +3,6 @@ class SensorReading < ActiveRecord::Base
   #
   # Associations
   #
-  belongs_to :sensor, :foreign_key => :sensor_local_id, :primary_key => :local_id
+  belongs_to :sensor
   validates_presence_of :sensor
 end

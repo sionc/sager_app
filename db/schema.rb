@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120529093010) do
+ActiveRecord::Schema.define(:version => 20120603081822) do
 
   create_table "hubs", :force => true do |t|
     t.string   "mac_address"
@@ -23,12 +23,12 @@ ActiveRecord::Schema.define(:version => 20120529093010) do
   add_index "hubs", ["mac_address"], :name => "index_hubs_on_mac_address", :unique => true
 
   create_table "sensor_readings", :force => true do |t|
-    t.integer  "watthours",       :default => 0, :null => false
-    t.integer  "sensor_local_id",                :null => false
-    t.datetime "created_at",                     :null => false
+    t.integer  "watthours",  :default => 0, :null => false
+    t.integer  "sensor_id",                 :null => false
+    t.datetime "created_at",                :null => false
   end
 
-  add_index "sensor_readings", ["sensor_local_id"], :name => "index_sensor_readings_on_sensor_id"
+  add_index "sensor_readings", ["sensor_id"], :name => "index_sensor_readings_on_sensor_id"
 
   create_table "sensors", :force => true do |t|
     t.string   "name"

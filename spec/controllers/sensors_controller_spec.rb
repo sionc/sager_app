@@ -58,11 +58,16 @@ describe SensorsController do
     end
 
     describe "GET index" do
-      it "assigns all sensors as @sensors" do
+      #it "assigns all sensors as @sensors" do
+      #  sensor = FactoryGirl.create(:sensor, :hub => @hub)
+      #  get :index, {}
+      #  assigns(:sensors).should eq([sensor])
+      #end
+      it "assigns current user's sensors as @sensors" do
         sensor = FactoryGirl.create(:sensor, :hub => @hub)
         get :index, {}
         assigns(:sensors).should eq([sensor])
-      end
+     end
     end
 
     describe "GET show" do

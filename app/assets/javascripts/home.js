@@ -7,7 +7,7 @@ var monthsInAYear = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Se
 var getSensorData = function() {
     $.ajax({
         type: 'GET',
-        url: 'pages/user_sensors/',
+        url: '/sensors',
         async: false,
         dataType: 'json',
         success: parseSensorData
@@ -72,7 +72,7 @@ var listDevices = function() {
         var energy_today = sensors[i].current_day_kwh_usage.toFixed(2);
         var cost_today = (energy_today * 0.11).toFixed(2);
         $("<td><p>Today</p></td>").appendTo(deviceContentTableBodyRow1);
-        $("<td><p>"+energy_today+"kWh</p></td>").appendTo(deviceContentTableBodyRow1);
+        $("<td><p>"+energy_today+" kWh</p></td>").appendTo(deviceContentTableBodyRow1);
         $("<td><p>$"+cost_today+"</p></td>").appendTo(deviceContentTableBodyRow1);
 
         // Add second row of the device content table

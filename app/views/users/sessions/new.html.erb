@@ -1,0 +1,28 @@
+<div class="row-fluid">
+  <div class="span4">
+    <div class="content well form-vertical" id="sign-in-container">
+      <%= form_for(resource, :as => resource_name,
+                   :url => session_path(resource_name)) do |f| %>
+
+          <%= f.label :email %>
+          <%= f.email_field :email %>
+
+          <%= f.label :password %>
+          <%= f.password_field :password %>
+
+          <% if devise_mapping.rememberable? -%>
+                <table class="table-condensed">
+                  <tr>
+                    <td><%= f.check_box :remember_me %></td>
+                    <td><p> </p><%= f.label :remember_me %></td>
+                  </tr>
+                </table>
+          <% end -%>
+
+          <%= f.submit "Sign in", :class => "btn btn-primary" %>
+      <% end %>
+      <br />
+      <%= render :partial => "devise/shared/links" %>
+    </div>
+  </div>
+</div>

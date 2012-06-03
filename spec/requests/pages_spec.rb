@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe "Pages" do
 
-   describe "About page" do
-
-    it "should have the content 'About Us'" do
-      visit '/pages/about'
-      page.should have_content('About Us')
+  describe "GET /pages/about" do
+    it "should render about page" do
+      get "/pages/about"
+      response.status.should be(200)
     end
   end
+
 end

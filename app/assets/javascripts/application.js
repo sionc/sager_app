@@ -14,3 +14,14 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
+
+$(function() {
+    var pathname = window.location.pathname;
+    if (pathname == "/pages/home") {
+        $("#home_tab").addClass("active");
+         $("#trends_tab").removeClass("active");
+    } else {
+        $("#home_tab").removeClass("active");
+        $("#trends_tab").addClass("active");
+    }
+});

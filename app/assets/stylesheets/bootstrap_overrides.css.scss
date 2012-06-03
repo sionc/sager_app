@@ -1,0 +1,56 @@
+// Set the correct sprite paths
+$iconSpritePath: image-url('glyphicons-halflings.png');
+$iconWhiteSpritePath: image-url('glyphicons-halflings-white.png');
+@import "bootstrap";
+body { padding-top: 60px; }
+@import "bootstrap-responsive";
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  background-image: linear-gradient(bottom, #FFFFFF 20%, #F2F5F7 52%, #EDF2F5 63%, #F0F6FA 90%);
+  background-image: -o-linear-gradient(bottom, #FFFFFF 20%, #F2F5F7 52%, #EDF2F5 63%, #F0F6FA 90%);
+  background-image: -moz-linear-gradient(bottom, #FFFFFF 20%, #F2F5F7 52%, #EDF2F5 63%, #F0F6FA 90%);
+  background-image: -webkit-linear-gradient(bottom, #FFFFFF 20%, #F2F5F7 52%, #EDF2F5 63%, #F0F6FA 90%);
+  background-image: -ms-linear-gradient(bottom, #FFFFFF 20%, #F2F5F7 52%, #EDF2F5 63%, #F0F6FA 90%);
+  background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.2, #FFFFFF),
+	color-stop(0.52, #F2F5F7),
+	color-stop(0.63, #EDF2F5),
+	color-stop(0.9, #F0F6FA)
+  );
+  background-repeat: repeat-x;
+}
+
+form {
+  margin: 0px;
+}
+
+// Maintain cross browser min height functionality for content boxes
+// "Internet Explorer 6 is the only browser that recongizes the "* html _____"
+// selector and thus is the only browser to read the hard-set height."
+// --(http://davidwalsh.name/cross-browser-css-min-height)
+#main  { min-height:500px; } * html #main { height:500px; }
+
+.content {
+  /*background-color: #fff;*/
+  padding: 5px;
+  margin: 0 -5px; /* negative indent the amount of the padding to maintain the grid system */
+}
+
+.well {
+   border: 1px #DDD solid;
+}
+
+/*.navbar-inner {*/
+  /*background-image: none !important;*/
+  /*background: url("images/ui-bg_highlight-soft_100_deedf7_1x100.png") repeat-x scroll 50% 50% #DEEDF7 !important;*/
+
+  /*border: 1px solid #AED0EA;*/
+  /*color: transparent;*/
+/*}*/

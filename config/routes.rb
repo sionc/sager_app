@@ -6,12 +6,12 @@ SagerApp::Application.routes.draw do
   resources :sensors
   resources :sensor_readings, :only => [:index, :show, :create]
 
-  root :to => "pages#home"
+  root :to => "pages#start"
 
   get "pages/home"
   get "pages/about"
   get "pages/trends"
-  get "pages/user_sensors"
+  get "pages/start"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

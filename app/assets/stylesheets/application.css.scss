@@ -12,36 +12,6 @@
  *= require_tree .
 */
 
-html {
-  overflow-y: scroll;
-}
-
-body {
-  background-image: linear-gradient(bottom, #FFFFFF 20%, #F2F5F7 52%, #EDF2F5 63%, #F0F6FA 90%);
-  background-image: -o-linear-gradient(bottom, #FFFFFF 20%, #F2F5F7 52%, #EDF2F5 63%, #F0F6FA 90%);
-  background-image: -moz-linear-gradient(bottom, #FFFFFF 20%, #F2F5F7 52%, #EDF2F5 63%, #F0F6FA 90%);
-  background-image: -webkit-linear-gradient(bottom, #FFFFFF 20%, #F2F5F7 52%, #EDF2F5 63%, #F0F6FA 90%);
-  background-image: -ms-linear-gradient(bottom, #FFFFFF 20%, #F2F5F7 52%, #EDF2F5 63%, #F0F6FA 90%);
-  background-image: -webkit-gradient(
-	linear,
-	left bottom,
-	left top,
-	color-stop(0.2, #FFFFFF),
-	color-stop(0.52, #F2F5F7),
-	color-stop(0.63, #EDF2F5),
-	color-stop(0.9, #F0F6FA)
-  );
-  background-repeat: repeat-x;
-}
-
-// Maintain cross browser min height functionality for content boxes
-// "Internet Explorer 6 is the only browser that recongizes the "* html _____"
-// selector and thus is the only browser to read the hard-set height."
-// --(http://davidwalsh.name/cross-browser-css-min-height)
-#main  { min-height:500px; } * html #main { height:500px; }
-
-.content {
-  /*background-color: #fff;*/
-  padding: 5px;
-  margin: 0 -5px; /* negative indent the amount of the padding to maintain the grid system */
+#sign-in-container {
+ padding: 50px 80px;
 }

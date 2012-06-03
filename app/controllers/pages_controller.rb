@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   #
   # Devise
   #
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:start, :about]
 
   def home
   end
@@ -13,12 +13,13 @@ class PagesController < ApplicationController
   def trends
   end
 
-  # GET /pages/user_sensors.json
-  def user_sensors
-    @user_sensors = current_user.sensors
-
+  def start
     respond_to do |format|
-      format.json { render json: {:sensors => @user_sensors} }
+      if user_signed_in?
+        format.html { redirect_to pages_home_path }
+      else
+        format.html
+      end
     end
   end
 end

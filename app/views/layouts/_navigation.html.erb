@@ -1,12 +1,53 @@
-<%= link_to "Sager", root_path, :class => 'brand' %>
-<ul class="nav">
-  <li>
-    <%= link_to('Home', root_path) %>
-  </li>
-  <li>
-    <%= link_to('Trends', pages_trends_path) %>
-  </li>
-  <li>
-    <%= link_to('About Us', pages_about_path) %>
-  </li>
-</ul>
+<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+  <span class="icon-bar"></span>
+  <span class="icon-bar"></span>
+  <span class="icon-bar"></span>
+</a>
+
+<%= link_to "sager", root_path, :class => 'brand' %>
+
+<!-- Everything you want hidden at 940px or less, place within here -->
+<div class="nav-collapse">
+  <% if user_signed_in? %>
+
+      <!-- .nav, .navbar-search, .navbar-form, etc -->
+      <ul class="nav pull-left">
+        <li class="divider-vertical"></li>
+        <li id="home_tab">
+          <a href="/"><i class="icon-home icon-white"></i> Home </a>
+        </li>
+        <li id="trends_tab">
+          <a href="/pages/trends"><i class="icon-signal icon-white"></i> Trends </a>
+        </li>
+        <li class="divider-vertical"></li>
+      </ul>
+
+      <!--User information if user is signed in-->
+      <ul class="nav pull-right">
+        <li class="divider-vertical"></li>
+        <li><a href="#"><%= current_user.email %></a></li>
+        <li class="divider-vertical"></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i>&nbsp<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#"><i class="icon-cog"></i> Settings </a></li>
+            <li class="divider"></li>
+            <%= link_to('Sign out', destroy_user_session_path, :method => :delete) %>
+          </ul>
+        </li>
+        <li class="divider-vertical"></li>
+      </ul>
+
+      <!--Inline login form if user is not signed in -->
+  <% else %>
+      <div class="navbar-form form-inline pull-right">
+      <%= form_for(resource, :as => resource_name,
+                   :url => session_path(resource_name)) do |f| %>
+          <%= f.email_field :email, :class=>"input-small", :placeholder=>"Email" %>
+          <%= f.password_field :password, :class=>"input-small", :placeholder=>"Password" %>
+          <%= f.submit "Sign in", :class => "btn btn-primary" %>
+      <% end %>
+      </div>
+  <% end %>
+</div>

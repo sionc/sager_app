@@ -8,11 +8,11 @@ class SensorsController < ApplicationController
   # GET /sensors
   # GET /sensors.json
   def index
-    @sensors = Sensor.all
+     @sensors = current_user.sensors
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @sensors }
+      format.json { render json: {:sensors => @sensors} }
     end
   end
 

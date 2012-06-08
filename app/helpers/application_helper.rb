@@ -1,6 +1,10 @@
 module ApplicationHelper
 
 # Methods to access the user resource in a non-devise controller
+  def brand_name
+    'PolarMeter'
+  end
+
   def resource_name
     :user
   end

@@ -1,5 +1,4 @@
 var sensors = new Array;
-var usage = new Array;
 var daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 var monthsInAYear = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -69,7 +68,7 @@ var listDevices = function() {
         // Add first row of the device content table
         var deviceContentTableBody = $("<tbody></tbody>").appendTo(deviceContentTable);
         var deviceContentTableBodyRow1 = $("<tr></tr>").appendTo(deviceContentTableBody);
-        var energy_today = sensors[i].current_day_kwh_usage.toFixed(2);
+        var energy_today = sensors[i].current_day_kwh_usage;
         var cost_today = (energy_today * 0.11).toFixed(2);
         $("<td><p>Today</p></td>").appendTo(deviceContentTableBodyRow1);
         $("<td><p>"+energy_today+" kWh</p></td>").appendTo(deviceContentTableBodyRow1);
@@ -77,11 +76,11 @@ var listDevices = function() {
 
         // Add second row of the device content table
         var deviceContentTableBodyRow2 = $("<tr></tr>").appendTo(deviceContentTableBody);
-        var energy_7days = sensors[i].current_week_kwh_usage.toFixed(2);
-        var cost_7days = (energy_7days * 0.11).toFixed(2);
+        var energy_week = sensors[i].current_week_kwh_usage;
+        var cost_week = (energy_week * 0.11).toFixed(2);
         $("<td><p>This Week</p></td>").appendTo(deviceContentTableBodyRow2);
-        $("<td><p>"+energy_7days+" kWh</p></td>").appendTo(deviceContentTableBodyRow2);
-        $("<td><p>$"+cost_7days+"</p></td>").appendTo(deviceContentTableBodyRow2);
+        $("<td><p>"+energy_week+" kWh</p></td>").appendTo(deviceContentTableBodyRow2);
+        $("<td><p>$"+cost_week+"</p></td>").appendTo(deviceContentTableBodyRow2);
     }
 
     // Add classes to portlets
@@ -101,75 +100,216 @@ var listDevices = function() {
 };
 
 // Display the usage chart for the week
-var displayWeeklyUsageChart = function() {
-    if($("#weekly-usage-chart").length == 0)
-        return;
+//var displayWeeklyUsageChart = function() {
+//    if($("#weekly-usage-chart").length == 0)
+//        return;
+//
+//    // Set up the chart options using object literals
+//	var options = {
+//		chart: {
+//			renderTo: 'weekly-usage-chart',
+//			type: 'bar',
+//            backgroundColor: 'transparent',
+//            borderColor: '#DDD',
+//            borderWidth: '1',
+//            plotBackgroundColor: 'transparent'
+//		},
+//		title: {
+//			text: 'Energy Consumption (kwh)'
+//		},
+//		xAxis: {
+//			categories: []
+//
+//		},
+//		yAxis: {
+//			min: 0,
+//			title: {
+//				text: ''
+//			}
+//		},
+//		legend: {
+//			backgroundColor: 'transparent',
+//            reversed: true
+//		},
+//		tooltip: {
+//			formatter: function() {
+//				return ''+
+//					this.series.name +': '+ this.y +' kwh';
+//			}
+//		},
+//		plotOptions: {
+//			series: {
+//				stacking: 'normal'
+//			}
+//		},
+//        credits: {
+//            enabled: false
+//        },
+//        series : []
+//	};
+//
+//    // Add items to xAxis categories array
+//    for (i = 0; i < 7; i++) {
+//        var d = new Date();
+//        d.setDate(d.getDate()-i);
+//        var day = daysOfTheWeek[d.getUTCDay()];
+//        var month = monthsInAYear[d.getUTCMonth()];
+//        var date = d.getUTCDate();
+//        options.xAxis.categories.push(day+" "+month+" "+date);
+//    }
+//
+//    // Add items to series array
+//    for (i = 0; i < sensors.length; i++) {
+//        options.series.push({
+//            name: sensors[i].name,
+//            //data: sensors[i].last_7_day_kwh_usage_by_day
+//            data: [10, 14, 9, 11, 7, 10, 12]
+//        });
+//    }
+//
+//    // Create the chart
+//    var chart = new Highcharts.Chart(options);
+//};
 
-    // Set up the chart options using object literals
-	var options = {
+// Display the usage chart for the last 7 days
+
+// Display 7 day usage
+var display7DayUsageChart = function() {
+    var i = 0, j = 0;
+    var categories = new Array;
+
+    // Add items to categories array
+    for (i = 0; i < 7; i++) {
+        var d = new Date();
+        d.setDate(d.getDate()-i);
+        var day = daysOfTheWeek[d.getDay()];
+        var month = monthsInAYear[d.getMonth()];
+        var date = d.getDate();
+        categories.push(day+" "+month+" "+date);
+    }
+
+    // Add sensor names to list
+    var sensorNames = new Array;
+    for(i = 0; i < sensors.length; i++) {
+        sensorNames.push(sensors[i].name);
+    }
+
+    // Chart data
+    var colors = Highcharts.getOptions().colors;
+    var totalUsage = [18, 12, 16, 14, 13, 12, 11];
+    var data = new Array;
+    for (i = 0; i < categories.length; i++) {
+        var sensorUsageByDay = new Array;
+        for(j = 0; j < sensors.length; j++) {
+            sensorUsageByDay.push(sensors[j].last_7_day_kwh_usage_by_day[i]);
+        }
+        data.push({
+            y: totalUsage[i],
+            color: colors[0],
+            drilldown: {
+                name: categories[i].toString(),
+                categories: sensorNames,
+                data: sensorUsageByDay,
+                color: colors[2]
+            }
+        });
+    }
+
+	function setChart(name, categories, data, color) {
+        chart.xAxis[0].setCategories(categories);
+        chart.series[0].remove();
+        chart.addSeries({
+			name: name,
+			data: data,
+			color: color || 'white'
+		});
+	}
+
+    var name = "Energy Usage";
+	chart = new Highcharts.Chart({
 		chart: {
-			renderTo: 'weekly-usage-chart',
-			type: 'bar',
+			renderTo: '7day-usage-chart',
+			type: 'column',
             backgroundColor: 'transparent',
             borderColor: '#DDD',
             borderWidth: '1',
             plotBackgroundColor: 'transparent'
 		},
 		title: {
-			text: 'Energy Consumption (kwh)'
+			text: ''
+		},
+		subtitle: {
+			text: 'Click the columns to view energy usage for each appliance. Click again to view total energy usage ' +
+                'for' +' the day.'
 		},
 		xAxis: {
-			categories: []
-
+			categories: categories,
+            minRange: 1
 		},
 		yAxis: {
-			min: 0,
 			title: {
-				text: ''
-			}
-		},
-		legend: {
-			backgroundColor: 'transparent',
-            reversed: true
-		},
-		tooltip: {
-			formatter: function() {
-				return ''+
-					this.series.name +': '+ this.y +' kwh';
+				text: 'Cost'
 			}
 		},
 		plotOptions: {
-			series: {
-				stacking: 'normal'
+			column: {
+				cursor: 'pointer',
+				point: {
+					events: {
+						click: function() {
+							var drilldown = this.drilldown;
+							if (drilldown) { // drill down
+								setChart(drilldown.name, drilldown.categories, drilldown.data, drilldown.color);
+							} else { // restore
+								setChart(name, categories, data);
+							}
+						}
+					}
+				},
+				dataLabels: {
+					enabled: true,
+					color: colors[0],
+					style: {
+						fontWeight: 'bold'
+					},
+					formatter: function() {
+						return '$' + this.y;
+					}
+				}
 			}
 		},
-        series : []
-	};
-
-    // Add items to xAxis categories array
-    for (i = 0; i < 7; i++) {
-        var d = new Date();
-        d.setDate(d.getDate()-i);
-        var day = daysOfTheWeek[d.getUTCDay()];
-        var month = monthsInAYear[d.getUTCMonth()];
-        var date = d.getUTCDate();
-        options.xAxis.categories.push(day+" "+month+" "+date);
-    }
-
-    // Add items to series array
-    for (i = 0; i < sensors.length; i++) {
-        options.series.push({
-            name: sensors[i].name,
-            data: sensors[i].last_7_day_kwh_usage_by_day
-        });
-    }
-
-    // Create the chart
-    var chart = new Highcharts.Chart(options);
+		tooltip: {
+			formatter: function() {
+				var point = this.point,
+					s = this.x +':<b>'+ '$'+this.y+'</b><br/>';
+				if (point.drilldown) {
+					s += 'Click to view '+ point.category +' energy usage by appliance';
+				} else {
+					s += 'Click to return to total energy usage';
+				}
+				return s;
+			}
+		},
+		series: [{
+			name: name,
+			data: data,
+			color: 'white'
+		}],
+		exporting: {
+			enabled: false
+		},
+        credits: {
+            enabled: false
+        },
+        legend: {
+            enabled: false
+        }
+	});
 };
 
 $(function() {
     getSensorData();
     listDevices();
-    displayWeeklyUsageChart();
+    //displayWeeklyUsageChart();
+    display7DayUsageChart();
 });

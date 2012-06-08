@@ -1,74 +1,125 @@
-$(function() {
-    if($("#usage-chart").length == 0)
+//var totalUsageData = new Array;
+
+// Get data associated with total usage
+var getTotalUsageData = function() {
+     $.ajax({
+      type: 'GET',
+      url: 'http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-v.json&callback=?',
+      dataType: 'json',
+      success: displayTotalUsageChart//parseTotalUsageData
+    });
+};
+
+// Parse total usage data
+//var parseTotalUsageData = function(data) {
+//    totalUsageData = data;
+//};
+
+
+// Display the total usage chart
+var displayTotalUsageChart = function(totalUsageData) {
+    var i = 0;
+    for(i = 0; i < totalUsageData.length; i++) {
+         var dataPoint = new Array;
+         dataPoint = totalUsageData[i];
+         dataPoint[1] = 5 + Math.floor(Math.random()*15);
+    }
+
+
+    if($("#total-usage-chart").length == 0)
         return;
 
-	var seriesOptions = [],
-		yAxisOptions = [],
-		seriesCounter = 0,
-		names = ['MSFT', 'AAPL', 'GOOG'],
-		colors = Highcharts.getOptions().colors;
+    // create the chart
+    chart = new Highcharts.StockChart({
+        chart: {
+            renderTo: 'total-usage-chart',
+            alignTicks: false,
+            backgroundColor: 'transparent',
+            borderColor: '#DDD',
+            borderWidth: '1',
+            plotBackgroundColor: 'transparent'
+        },
 
-	$.each(names, function(i, name) {
-
-		$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename='+ name.toLowerCase() +'-c.json&callback=?'
-            , function(data) {
-
-			seriesOptions[i] = {
-				name: name,
-				data: data
-			};
-
-			// As we're loading the data asynchronously, we don't know what order it will arrive. So
-			// we keep a counter and create the chart when all the data is loaded.
-			seriesCounter++;
-
-			if (seriesCounter == names.length) {
-				createChart();
+        rangeSelector: {
+            buttons: [
+                {
+                    type: 'day',
+                    count: 1,
+                    text: '1d'
+                }, {
+                    type: 'week',
+                    count: 1,
+                    text: '1w'
+                }, {
+                    type: 'month',
+                    count: 1,
+                    text: '1m'
+                }, {
+                    type: 'month',
+                    count: 3,
+                    text: '3m'
+                }, {
+                    type: 'month',
+                    count: 6,
+                    text: '6m'
+                }, {
+                    type: 'ytd',
+                    text: 'YTD'
+                }, {
+                    type: 'year',
+                    count: 1,
+                    text: '1y'
+                }, {
+                    type: 'all',
+                    text: 'All'
+                }
+            ],
+            selected: 2
+        },
+//        plotOptions: {
+//            column:{
+//                dataLabels: {
+//                enabled: true,
+//                color: (Highcharts.getOptions().colors)[0],
+//                style: {
+//                    fontWeight: 'bold'
+//                },
+//                formatter: function() {
+//                    return '$' + this.y;
+//                }
+//			}
+//          }
+//        },
+        title: {
+            text: 'Daily Energy Usage Data'
+        },
+        yAxis: {
+			title: {
+				text: 'Cost'
 			}
-		});
-	});
+		},
+        credits: {
+            enabled: false
+        },
+        series: [{
+            type: 'column',
+            name: 'Cost in $ ',
+            data: totalUsageData,
+            dataGrouping: {
+                units: [[
+                    'week', // unit name
+                    [1] // allowed multiples
+                ], [
+                    'month',
+                    [1, 2, 3, 4, 6]
+                ]]
+            }
+        }]
+    });
+};
 
-	// create the chart when all data is loaded
-	function createChart() {
 
-		chart = new Highcharts.StockChart({
-		    chart: {
-		        renderTo: 'usage-chart',
-                backgroundColor: 'transparent',
-                borderColor: '#DDD',
-                borderWidth: '1',
-                plotBackgroundColor: 'transparent'
-		    },
-
-		    rangeSelector: {
-		        selected: 4
-		    },
-
-		    yAxis: {
-		    	labels: {
-		    		formatter: function() {
-		    			return (this.value > 0 ? '+' : '') + this.value + '%';
-		    		}
-		    	},
-		    	plotLines: [{
-		    		value: 0,
-		    		width: 2,
-		    		color: 'silver'
-		    	}]
-		    },
-
-		    plotOptions: {
-		    	series: {
-		    		compare: 'percent'
-		    	}
-		    },
-
-		    tooltip: {
-		    	pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-		    	valueDecimals: 2
-		    },
-
-		    series: seriesOptions
-		});
-	}
+$(function() {
+    getTotalUsageData();
+   // displayTotalUsageChart();
 });

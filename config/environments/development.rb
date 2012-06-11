@@ -38,3 +38,6 @@ SagerApp::Application.configure do
   # Devise requires a default URL
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 end
+
+# SensorReading.generate_readings
+# Delayed::Job.enqueue ReadingGenerationJob.new

@@ -1,16 +1,15 @@
 <div class="row-fluid">
-  <div class="span3">
-    <div class="content" id="sensor-list-container"></div>
-  </div>
   <div class="span9">
-    <!--<div class="content well" id= "total-usage-summary-container">-->
-      <!--<div id= "total-usage-summary"></div>-->
-    <!--</div>-->
-    <!--<div class="content" id= "weekly-usage-chart-container">-->
-      <!--<div id= "weekly-usage-chart"></div>-->
-    <!--</div>-->
+    <div class="content" id= "usage-summary-container">
+      <div class="ui-widget ui-widget-content">
+        <%= render 'usage_summary' %>
+      </div>
+    </div>
     <div class="content" id= "7day-usage-chart-container">
       <div id= "7day-usage-chart"></div>
     </div>
+  </div>
+  <div class="span3">
+    <div class="content" id="sensor-list-container"></div>
   </div>
 </div>

@@ -13,6 +13,22 @@ var getSensorData = function() {
     });
 };
 
+// Get total usage data
+var getTotalUsageData = function() {
+    $.ajax({
+        type: 'GET',
+        url: '',
+        async: false,
+        dataType: 'xml',
+        success: parseTotalUsageData
+    });
+};
+
+// Parse the total usage data
+var parseTotalUsageData = function(totalUsageData){
+    alert(totalUsageData.length);
+};
+
 // Parse the sensor data
 var parseSensorData = function(sensorData){
     if(sensorData.sensors.length == 0)
@@ -84,9 +100,9 @@ var listDevices = function() {
     }
 
     // Add classes to portlets
-    $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+    $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix" )
         .find( ".portlet-header" )
-            .addClass( "ui-widget-header ui-corner-all" )
+            .addClass( "ui-widget-header ui-widget-header-text" )
             .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
             .end()
         .find( ".portlet-content" );
@@ -309,6 +325,7 @@ var display7DayUsageChart = function() {
 
 $(function() {
     getSensorData();
+    //getTotalUsageData();
     listDevices();
     //displayWeeklyUsageChart();
     display7DayUsageChart();

@@ -62,7 +62,7 @@ var updateBudgetWidgets = function(current, expected){
 
    if (!$("#energy-current").is(":empty")){
    $("#energy-current").empty();
- }
+  }
 
   if (!$("#energy-expected").is(":empty")){
     $("#energy-expected").empty();

@@ -7,7 +7,7 @@ var getSensorData = function() {
     var container = "#sensor-list-container";
 
     // If another page is loaded...
-    if($(container).length == 0){
+    if ($(container).length == 0) {
         return;
     }
 
@@ -21,13 +21,13 @@ var getSensorData = function() {
 };
 
 // Parse the sensor data
-var parseSensorData = function(sensorData){
-    if(sensorData.sensors.length == 0)
+var parseSensorData = function(sensorData) {
+    if (sensorData.sensors.length == 0)
         return;
 
     var numSensors = sensorData.sensors.length;
     var i = 0;
-    for(i = 0; i < numSensors; i++){
+    for (i = 0; i < numSensors; i++) {
         var sensorObj = jQuery.parseJSON(JSON.stringify(sensorData.sensors[i]));
         sensors.push(sensorObj);
     }
@@ -38,28 +38,28 @@ var listDevices = function() {
     var container = "#sensor-list-container";
 
     // If another page is loaded...
-    if($(container).length == 0){
+    if ($(container).length == 0) {
         return;
     }
 
     // If no sensors are found...
-    if(sensors.length == 0){
+    if (sensors.length == 0) {
         $("</h6>No sensors detected</h6>").appendTo(container);
         return;
     }
 
-    $( container ).sortable({
+    $(container).sortable({
         connectWith: container
     });
 
-     // Create portlets for each sensor
+    // Create portlets for each sensor
     var i = 0;
-    for(i = 0; i < sensors.length; i++) {
+    for (i = 0; i < sensors.length; i++) {
         var deviceContainer = $("<div></div>").appendTo(container).addClass("portlet");
 
         // Add device header
         var deviceHeader = $("<div></div>").appendTo(deviceContainer).addClass("portlet-header");
-        $("<h5>"+sensors[i].name+"</h5>").appendTo(deviceHeader);
+        $("<h5>" + sensors[i].name + "</h5>").appendTo(deviceHeader);
 
         // Add device content
         var deviceContent = $("<div></div>").appendTo(deviceContainer).addClass("portlet-content");
@@ -78,29 +78,29 @@ var listDevices = function() {
         var energy_today = sensors[i].current_day_kwh_usage;
         var cost_today = (energy_today * 0.11).toFixed(2);
         $("<td><p>Today</p></td>").appendTo(deviceContentTableBodyRow1);
-        $("<td><p>"+energy_today+" kWh</p></td>").appendTo(deviceContentTableBodyRow1);
-        $("<td><p>$"+cost_today+"</p></td>").appendTo(deviceContentTableBodyRow1);
+        $("<td><p>" + energy_today + " kWh</p></td>").appendTo(deviceContentTableBodyRow1);
+        $("<td><p>$" + cost_today + "</p></td>").appendTo(deviceContentTableBodyRow1);
 
         // Add second row of the device content table
         var deviceContentTableBodyRow2 = $("<tr></tr>").appendTo(deviceContentTableBody);
         var energy_week = sensors[i].current_week_kwh_usage;
         var cost_week = (energy_week * 0.11).toFixed(2);
         $("<td><p>This Week</p></td>").appendTo(deviceContentTableBodyRow2);
-        $("<td><p>"+energy_week+" kWh</p></td>").appendTo(deviceContentTableBodyRow2);
-        $("<td><p>$"+cost_week+"</p></td>").appendTo(deviceContentTableBodyRow2);
+        $("<td><p>" + energy_week + " kWh</p></td>").appendTo(deviceContentTableBodyRow2);
+        $("<td><p>$" + cost_week + "</p></td>").appendTo(deviceContentTableBodyRow2);
     }
 
     // Add classes to portlets
-    $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix" )
-        .find( ".portlet-header" )
-            .addClass( "ui-widget-header ui-widget-header-text" )
-            .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
-            .end()
-        .find( ".portlet-content" );
+    $(".portlet").addClass("ui-widget ui-widget-content ui-helper-clearfix")
+        .find(".portlet-header")
+        .addClass("ui-widget-header ui-widget-header-text")
+        .prepend("<span class='ui-icon ui-icon-minusthick'></span>")
+        .end()
+        .find(".portlet-content");
 
-    $( ".portlet-header .ui-icon" ).click(function() {
-        $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
-        $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
+    $(".portlet-header .ui-icon").click(function() {
+        $(this).toggleClass("ui-icon-minusthick").toggleClass("ui-icon-plusthick");
+        $(this).parents(".portlet:first").find(".portlet-content").toggle();
     });
 
     $(container).disableSelection();
@@ -188,16 +188,16 @@ var display7DayUsageChart = function() {
     // Add items to categories array
     for (i = 0; i < 7; i++) {
         var d = new Date();
-        d.setDate(d.getDate()-i);
+        d.setDate(d.getDate() - i);
         var day = daysOfTheWeek[d.getDay()];
         var month = monthsInAYear[d.getMonth()];
         var date = d.getDate();
-        categories.push(day+" "+month+" "+date);
+        categories.push(day + " " + month + " " + date);
     }
 
     // Add sensor names to list
     var sensorNames = new Array;
-    for(i = 0; i < sensors.length; i++) {
+    for (i = 0; i < sensors.length; i++) {
         sensorNames.push(sensors[i].name);
     }
 
@@ -206,18 +206,18 @@ var display7DayUsageChart = function() {
     var data = new Array;
     for (i = 0; i < categories.length; i++) {
         var sensorUsageByDay = new Array;
-        for(j = 0; j < sensors.length; j++) {
-            sensorUsageByDay.push(sensors[j].last_7_day_kwh_usage_by_day[i]);
+        for (j = 0; j < sensors.length; j++) {
+            sensorUsageByDay.push(Math.round(sensors[j].last_7_day_kwh_usage_by_day[i] * 0.11 * 100) / 100);
         }
 
         var k = 0;
         var totalUsageByDay = 0.0;
-        for(k = 0; k < sensorUsageByDay.length; k++){
+        for (k = 0; k < sensorUsageByDay.length; k++) {
             totalUsageByDay = totalUsageByDay + sensorUsageByDay[k];
         }
 
         data.push({
-            y: Math.round(totalUsageByDay*100)/100,
+            y: Math.round(totalUsageByDay * 100) / 100,
             color: colors[0],
             drilldown: {
                 name: categories[i].toString(),
@@ -228,100 +228,210 @@ var display7DayUsageChart = function() {
         });
     }
 
-	function setChart(name, categories, data, color) {
+    function setChart(name, categories, data, color) {
         chart.xAxis[0].setCategories(categories);
         chart.series[0].remove();
         chart.addSeries({
-			name: name,
-			data: data,
-			color: color || 'white'
-		});
-	}
+            name: name,
+            data: data,
+            color: color || 'white'
+        });
+    }
 
     var name = "Energy Usage";
-	chart = new Highcharts.Chart({
-		chart: {
-			renderTo: '7day-usage-chart',
-			type: 'column',
+    chart = new Highcharts.Chart({
+        chart: {
+            renderTo: '7day-usage-chart',
+            type: 'column',
             backgroundColor: 'transparent',
             borderColor: '#DDD',
             borderWidth: '1',
             plotBackgroundColor: 'transparent'
-		},
-		title: {
-			text: ''
-		},
-		subtitle: {
-			text: 'Click the columns to view energy usage for each appliance. Click again to view total energy usage ' +
-                'for' +' the day.'
-		},
-		xAxis: {
-			categories: categories,
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: 'Click the columns to view energy usage for each appliance. Click again to view total energy usage ' +
+                'for' + ' the day.'
+        },
+        xAxis: {
+            categories: categories,
             minRange: 1
-		},
-		yAxis: {
-			title: {
-				text: 'Cost'
-			}
-		},
-		plotOptions: {
-			column: {
-				cursor: 'pointer',
-				point: {
-					events: {
-						click: function() {
-							var drilldown = this.drilldown;
-							if (drilldown) { // drill down
-								setChart(drilldown.name, drilldown.categories, drilldown.data, drilldown.color);
-							} else { // restore
-								setChart(name, categories, data);
-							}
-						}
-					}
-				},
-				dataLabels: {
-					enabled: true,
-					color: colors[0],
-					style: {
-						fontWeight: 'bold'
-					},
-					formatter: function() {
-						return '$' + this.y;
-					}
-				}
-			}
-		},
-		tooltip: {
-			formatter: function() {
-				var point = this.point,
-					s = this.x +':<b>'+ '$'+this.y+'</b><br/>';
-				if (point.drilldown) {
-					s += 'Click to view '+ point.category +' energy usage by appliance';
-				} else {
-					s += 'Click to return to total energy usage';
-				}
-				return s;
-			}
-		},
-		series: [{
-			name: name,
-			data: data,
-			color: 'white'
-		}],
-		exporting: {
-			enabled: false
-		},
+        },
+        yAxis: {
+            title: {
+                text: 'Cost'
+            }
+        },
+        plotOptions: {
+            column: {
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        click: function() {
+                            var drilldown = this.drilldown;
+                            if (drilldown) { // drill down
+                                setChart(drilldown.name, drilldown.categories, drilldown.data, drilldown.color);
+                            } else { // restore
+                                setChart(name, categories, data);
+                            }
+                        }
+                    }
+                },
+                dataLabels: {
+                    enabled: true,
+                    color: colors[0],
+                    style: {
+                        fontWeight: 'bold'
+                    },
+                    formatter: function() {
+                        return '$' + this.y;
+                    }
+                }
+            }
+        },
+        tooltip: {
+            formatter: function() {
+                var point = this.point,
+                    s = this.x + ':<b>' + '$' + this.y + '</b><br/>';
+                if (point.drilldown) {
+                    s += 'Click to view ' + point.category + ' energy usage by appliance';
+                } else {
+                    s += 'Click to return to total energy usage';
+                }
+                return s;
+            }
+        },
+        series: [
+            {
+                name: name,
+                data: data,
+                color: 'white'
+            }
+        ],
+        exporting: {
+            enabled: false
+        },
         credits: {
             enabled: false
         },
         legend: {
             enabled: false
         }
-	});
+    });
+};
+
+// Display usage summary
+var displayUsageSummary = function() {
+    if (sensors.length == 0)
+        return;
+
+    var totalUsageByday = new Array;
+    var i = 0;
+    for (i = 0; i < sensors[0].current_month_kwh_usage_by_day.length; i++) {
+        var j = 0;
+        var usage = 0;
+        for (j = 0; j < sensors.length; j++) {
+            usage = usage + sensors[j].current_month_kwh_usage_by_day[i];
+        }
+        totalUsageByday.push(usage)
+    }
+
+    if (totalUsageByday.length == 0)
+        return;
+
+    // Find minimum usage for the month
+    var minUsageKwh = Number.MAX_VALUE;
+    var minUsageDaysAgo = 0;
+    var minUsageDate = "";
+
+    // Find min
+    for (i = 0; i < totalUsageByday.length; i++) {
+        if (totalUsageByday[i] < minUsageKwh) {
+            minUsageKwh = totalUsageByday[i];
+            minUsageDaysAgo = i;
+        }
+    }
+    minUsageDate = createDateString(minUsageDaysAgo);
+
+    if (!$("#min-usage").is(":empty")) {
+        $("#min-usage").empty();
+    }
+
+    $("#min-usage").append("You used the <u>least</u> amount of energy <b>(" + Math.round(minUsageKwh).toString() + " kWh)</b>" +
+        " this month on <i>" + minUsageDate + "</i> and it costed you " +
+        "<b>$" + (Math.round(minUsageKwh * 0.11 * 100) / 100).toString() + "</b>");
+
+    // Find maximum usage for the month
+    var maxUsageKwh = 0;
+    var maxUsageDaysAgo = 0;
+    var maxUsageDate = "";
+
+    // Find max
+    for (i = 0; i < totalUsageByday.length; i++) {
+        if (totalUsageByday[i] > maxUsageKwh) {
+            maxUsageKwh = totalUsageByday[i];
+            maxUsageDaysAgo = i;
+        }
+    }
+    maxUsageDate = createDateString(maxUsageDaysAgo);
+
+    if (!$("#max-usage").is(":empty")) {
+        $("#max-usage").empty();
+    }
+
+    $("#max-usage").append("You used the <u>most</u> amount of energy <b>(" + Math.round(maxUsageKwh).toString() + " kWh)</b> " +
+        "this month on <i>" + maxUsageDate + "</i> and it costed you " +
+        "<b>$" + (Math.round(maxUsageKwh * 0.11 * 100) / 100).toString() + "</b>");
+
+    // Find average usage for the month
+    var avgUsageKwh = 0;
+
+    // Find average
+    for (i = 0; i < totalUsageByday.length; i++) {
+        avgUsageKwh = avgUsageKwh + totalUsageByday[i];
+    }
+    avgUsageKwh = avgUsageKwh / totalUsageByday.length;
+
+    if (!$("#avg-usage").is(":empty")) {
+        $("#avg-usage").empty();
+    }
+
+    $("#avg-usage").append("You are using <b>" + Math.round(avgUsageKwh).toString() +
+        " kWh</b> on <u>average</u> this month and " +
+        "it is costing you <b>$" + (Math.round(avgUsageKwh * 0.11 * 100) / 100).toString() + "</b> per day");
+
+    // Find totals for the month
+    var totalMonthUsage = 0;
+    for (i = 0; i < totalUsageByday.length; i++) {
+        totalMonthUsage = totalMonthUsage + totalUsageByday[i];
+    }
+
+    if (!$("#total-cost-month").is(":empty")) {
+        $("#total-cost-month").empty();
+    }
+    if (!$("#total-kwh-month").is(":empty")) {
+        $("#total-kwh-month").empty();
+    }
+
+    $("#total-cost-month").append("$" + (Math.round(totalMonthUsage * 0.11 * 100) / 100).toString());
+    $("#total-kwh-month").append(Math.round(totalMonthUsage).toString() + " kilowatt-hours");
+};
+
+// Create a date string of the form "Weekday Month Day" e.g Sun Jun 3
+var createDateString = function(daysAgo) {
+    var d = new Date();
+    d.setDate(d.getDate() - daysAgo);
+    var day = daysOfTheWeek[d.getDay()];
+    var month = monthsInAYear[d.getMonth()];
+    var date = d.getDate();
+    return (day + " " + month + " " + date);
 };
 
 $(function() {
     getSensorData();
     listDevices();
     display7DayUsageChart();
+    displayUsageSummary();
 });

@@ -22,10 +22,11 @@ class Sensor < ActiveRecord::Base
   # Add virtual attributes to JSON hash
   def as_json(options = { })
     super((options || { }).merge({
-      :methods => [:current_hour_kwh_usage,
-                   :current_day_kwh_usage,
-                   :current_week_kwh_usage,
-                   :last_7_day_kwh_usage_by_day]
+        :methods => [:current_hour_kwh_usage,
+                     :current_day_kwh_usage,
+                     :current_week_kwh_usage,
+                     :last_7_day_kwh_usage_by_day,
+                     :current_month_kwh_usage_by_day]
     }))
   end
 
@@ -39,7 +40,7 @@ class Sensor < ActiveRecord::Base
     total_day_kwh_usage_on(Time.now.utc.to_date).round(2)
   end
 
-  # Get the total kwh usage for the last 7 days
+  # Get the total kwh usage for the current week
   def current_week_kwh_usage
     total_week_kwh_usage_until(Time.now.utc.to_date).round(2)
   end
@@ -53,8 +54,18 @@ class Sensor < ActiveRecord::Base
       usage_data
   end
 
-  # -----------------------------------------------------------
+  # Get the kwh usage for each day for the current week
+  def current_month_kwh_usage_by_day
+    current_date = Time.now.utc.to_date
+    num_days_until_yesterday = current_date.day - 1
+    usage_data = []
+      current_date.downto(num_days_until_yesterday.days.ago.utc.to_date).each do |date|
+        usage_data << total_day_kwh_usage_on(date).round(2)
+      end
+      usage_data
+  end
 
+  # -----------------------------------------------------------
 
   # Calculate the total kwh usage for a given date (UTC) and hour (range = 0..23)
   def total_hour_kwh_usage_on(date, hour)
@@ -96,6 +107,17 @@ class Sensor < ActiveRecord::Base
 
     cumulative_daily_kwh_usage = 0.0
     (0..date.wday).each do |i|
+      cumulative_daily_kwh_usage += self.total_day_kwh_usage_on(date - i.day)
+    end
+    cumulative_daily_kwh_usage
+  end
+
+  # Calculate the total kwh usage for the month until the specified date (UTC)
+  def total_month_kwh_usage_until(date)
+    raise "Invalid argument: Please use a date value that is not in the future" if (date > Time.now.utc.to_date)
+
+    cumulative_daily_kwh_usage = 0.0
+    (1..date.day).each do |i|
       cumulative_daily_kwh_usage += self.total_day_kwh_usage_on(date - i.day)
     end
     cumulative_daily_kwh_usage

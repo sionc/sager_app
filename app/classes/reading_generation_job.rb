@@ -1,13 +1,13 @@
 class ReadingGenerationJob
   # mandatory enqueued job method
   def perform
-    ReadingGenerationJob.gen_readings Time.now
+    ReadingGenerationJob.gen_readings Time.now, true
   end
 
   #
   # Given a Time object, will generate four readings for that minute
   #
-  def self.gen_readings(time)
+  def self.gen_readings(time, requeue)
     time = Time.now if time.nil?
 
     demo_users = User.where({ :demo => true })
@@ -34,8 +34,8 @@ class ReadingGenerationJob
       end
     end
 
-    # re-queue the task after completing it
-    self.delay(:run_at => 1.minute.from_now).gen_readings Time.now
+    # re-queue the task after completing it, if requeue is true
+    self.delay(:run_at => 1.minute.from_now).gen_readings Time.now if requeue
   end
 
   #
@@ -48,7 +48,7 @@ class ReadingGenerationJob
     ActiveRecord::Base.transaction do
       total_minutes = ((time_end - time_start)/60).floor
       (0..total_minutes).each do |min|
-        ReadingGenerationJob.gen_readings time_start + min*60
+        ReadingGenerationJob.gen_readings(time_start + min*60, false)
       end
     end
   end

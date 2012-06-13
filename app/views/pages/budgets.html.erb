@@ -4,26 +4,31 @@
       <div class="well budget-content">
         <h4 class="budget-sensor">Television</h4>
         <form class="budget-amounts form-inline">
-          <input class="budget-amount-current input-small disabled" id="amount-current" type="text" disabled="">
+          <div class="input-prepend">
+          <span class="add-on">$</span><input class="budget-amount-current span7 disabled" size=6
+                                                id="amount-current" type="text" disabled="">
+          </div>
           <span class="help-inline">of &nbsp</span>
-          <!--<input class="budget-amount-expected input-small" id="amount-expected" type="text">-->
-
-              <div class="input-prepend">
-                <span class="add-on">$</span><input class="budget-amount-expected span6" size=4
-                                                    id="amount-expected" type="text">
-              </div>
-
+          <div class="input-prepend">
+            <span class="add-on">$</span><input class="budget-amount-expected span7" size=6
+                                                id="amount-expected" type="text">
+          </div>
         </form>
         <br/><br/>
-
-        <div class="progress progress-success" style="margin-bottom: 1px;">
-          <div class="bar" style="width: 40%"></div>
+        <div class="progress progress-success budget-progress" id="percent-progress">
+          <div class="bar" id="percent-progress-bar"></div>
         </div>
         <br/>
+         <div class="budget-energy">
+          <h6 id="energy-current"></h6>
+          <h6>&nbsp of &nbsp</h6>
+          <h6 id="energy-expected"></h6>
+        </div>
         <label class="checkbox">
-          <input type="checkbox"><p>Notify me when I exceed my budget</p>
+          <input type="checkbox">Notify me when I exceed my budget
         </label>
       </div>
+
     </div>
   </div>
 </div>

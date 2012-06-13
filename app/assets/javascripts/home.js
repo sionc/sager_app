@@ -4,6 +4,13 @@ var monthsInAYear = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Se
 
 // Get data associated with all sensors
 var getSensorData = function() {
+    var container = "#sensor-list-container";
+
+    // If another page is loaded...
+    if($(container).length == 0){
+        return;
+    }
+
     $.ajax({
         type: 'GET',
         url: '/sensors',

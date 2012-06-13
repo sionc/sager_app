@@ -18,10 +18,16 @@
 $(function() {
     var pathname = window.location.pathname;
     if (pathname == "/pages/home") {
-        $("#home_tab").addClass("active");
-         $("#trends_tab").removeClass("active");
+      $("#home_tab").addClass("active");
+      $("#trends_tab").removeClass("active");
+      $("#budgets_tab").removeClass("active");
+    } else if (pathname == "/pages/trends") {
+      $("#home_tab").removeClass("active");
+      $("#trends_tab").addClass("active");
+      $("#budgets_tab").removeClass("active");
     } else {
-        $("#home_tab").removeClass("active");
-        $("#trends_tab").addClass("active");
+      $("#home_tab").removeClass("active");
+      $("#trends_tab").removeClass("active");
+      $("#budgets_tab").addClass("active");
     }
 });

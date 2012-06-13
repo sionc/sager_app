@@ -5,6 +5,10 @@ module ApplicationHelper
     'PolarMeter'
   end
 
+  def dollars_per_kwh
+    0.11
+  end
+
   def resource_name
     :user
   end

@@ -15,25 +15,27 @@
 }
 
 .budget-amount-expected {
-   font-size: 15px;
-   font-weight: bold;
-   //height: 15px;
-   //border: none;
-   //box-shadow: none;
-   color: green;
-   text-align:left;
+  font-size: 15px;
+  font-weight: bold;
+  color: #57A957;
+  text-align:left;
 }
 
 .budget-amount-current {
-   font-size: 15px;
-   font-weight: bold;
-   //height: 15px;
-   border: none;
-   box-shadow: none;
-   color: green;
-   text-align:right;
+  font-size: 15px;
+  font-weight: bold;
+  color: #57A957;
+  text-align:left;
 }
 
 .budget-energy {
-   float:right;
+  float:right;
+}
+
+.budget-energy h6 {
+  display:inline-block;
+}
+
+.budget-progress{
+  margin-bottom: 1px;
 }

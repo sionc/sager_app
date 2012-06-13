@@ -1,33 +1,22 @@
-//var totalUsageData = new Array;
-
 // Get data associated with total usage
 var getTotalUsageData = function() {
-     $.ajax({
+    if($("#total-usage-chart").length == 0)
+        return;
+
+    $.ajax({
       type: 'GET',
       url: 'http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-v.json&callback=?',
       dataType: 'json',
-      success: displayTotalUsageChart//parseTotalUsageData
+      success: displayTotalUsageChart
     });
 };
-
-// Parse total usage data
-//var parseTotalUsageData = function(data) {
-//    totalUsageData = data;
-//};
-
 
 // Display the total usage chart
 var displayTotalUsageChart = function(totalUsageData) {
     var i = 0;
     for(i = 0; i < totalUsageData.length; i++) {
-         var dataPoint = new Array;
-         dataPoint = totalUsageData[i];
-         dataPoint[1] = 5 + Math.floor(Math.random()*15);
+        totalUsageData[i][1] = 2 + Math.floor(Math.random()*3);
     }
-
-
-    if($("#total-usage-chart").length == 0)
-        return;
 
     // create the chart
     chart = new Highcharts.StockChart({
@@ -121,5 +110,4 @@ var displayTotalUsageChart = function(totalUsageData) {
 
 $(function() {
     getTotalUsageData();
-   // displayTotalUsageChart();
 });

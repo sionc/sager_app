@@ -54,8 +54,8 @@
       <div class="navbar-form form-inline pull-right">
       <%= form_for(resource, :as => resource_name,
                    :url => session_path(resource_name)) do |f| %>
-          <%= f.email_field :email, :class=>"input-small", :placeholder=>"Email" %>
-          <%= f.password_field :password, :class=>"input-small", :placeholder=>"Password" %>
+          <%= f.email_field :email, :class=>"input-medium", :placeholder=>"Email" %>
+          <%= f.password_field :password, :class=>"input-medium", :placeholder=>"Password" %>
           <%= f.submit "Sign in", :class => "btn btn-primary" %>
       <% end %>
       </div>

@@ -10,25 +10,17 @@
           <table id="usage-info" class="table">
              <tr>
               <td>
-                <p>You are using <b>41 kWh</b> on <u>average</u> this month and
-                it is costing you <b>$<%= (41 * 0.11).round(2) %></b> per day
-                </p>
+                <p id="avg-usage"></p>
               </td>
             </tr>
             <tr>
               <td>
-                <p>You used the <u>least</u> amount of energy <b>(23 kWh)</b>
-                this month on <i>Friday June 1</i> and it costed you
-                <b>$<%= (23 * 0.11).round(2) %></b></p>
+                <p id="min-usage"></p>
               </td>
             </tr>
             <tr>
               <td>
-                <p>
-                  You used the <u>most</u> amount of energy <b>(57 kWh)</b>
-                  this month on <i>Sunday June 3</i> and it costed you
-                  <b>$<%= (57 * 0.11).round(2) %></b>
-                </p>
+                <p id="max-usage"></p>
               </td>
             </tr>
           </table>
@@ -37,8 +29,8 @@
       <div class="span3">
         <div class="content well" id="usage-totals">
           <div><h6>This Month</h6></div>
-          <div><h1>$<%= (41 * 10 * 0.11).round(2) %></h1></div>
-          <div><h6><%= 41 * 10 %> kilowatt-hours</h6></div>
+          <div><h1 id="total-cost-month"></h1></div>
+          <div><h6 id="total-kwh-month"></h6></div>
         </div>
       </div>
 

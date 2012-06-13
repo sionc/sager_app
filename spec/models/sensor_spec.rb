@@ -86,7 +86,7 @@ describe Sensor do
     sensor1.total_day_kwh_usage_on(time.to_date).should == (kwh_usage_per_hour * num_hours)
   end
 
-   it 'should calculate kwh usage for the week upto the given date' do
+   it 'should calculate kwh usage for the week until the given date' do
     hub1 = FactoryGirl.create(:hub)
     sensor1 = FactoryGirl.create(:sensor, :hub => hub1)
 
@@ -113,5 +113,34 @@ describe Sensor do
     kwh_usage_per_hour = average_usage_per_hour/1000
     kwh_usage_per_day =  kwh_usage_per_hour * num_hours
     sensor1.total_week_kwh_usage_until(time.to_date).should == (kwh_usage_per_day * num_days)
+   end
+
+  it 'should calculate kwh usage for the month until the given date' do
+    hub1 = FactoryGirl.create(:hub)
+    sensor1 = FactoryGirl.create(:sensor, :hub => hub1)
+
+    time = Time.utc(2012, 1, 2, 11, 58)
+    num_days = time.day
+    num_hours = 2
+    num_readings = 2
+    t = time
+
+    (1..num_days).each do |i|
+      t = time - i.days
+      (0..num_hours-1).each do |j|
+        (0..num_readings-1).each do |k|
+          reading = FactoryGirl.create(:sensor_reading, :sensor => sensor1)
+          reading.created_at = t - k.minutes
+          reading.save!
+        end
+        t = t - 1.hour
+      end
+    end
+
+    cumulative_usage_per_hour = (1337 * num_readings).to_f
+    average_usage_per_hour = cumulative_usage_per_hour/60
+    kwh_usage_per_hour = average_usage_per_hour/1000
+    kwh_usage_per_day =  kwh_usage_per_hour * num_hours
+    sensor1.total_month_kwh_usage_until(time.to_date).should == (kwh_usage_per_day * num_days)
    end
 end

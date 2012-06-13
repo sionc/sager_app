@@ -17,6 +17,7 @@ group :development do
   gem 'sqlite3', '1.3.5'
   gem 'rspec-rails', '2.9.0'
   gem 'guard-rspec', '0.5.5'
+  gem 'ruby-prof'
 end
 
 # Gems used only for assets and not required

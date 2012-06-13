@@ -8,7 +8,19 @@ class ReadingGenerationJob
   # Given a Time object, will generate four readings for that minute
   #
   def self.gen_readings(time, requeue)
-    time = Time.now if time.nil?
+    rand_factor = 1
+    case time.day % 5
+    when 0
+      rand_factor = 5
+    when 1
+      rand_factor = 3
+    when 2
+      rand_factor = 7
+    when 3
+      rand_factor = 2
+    when 4
+      rand_factor = 1
+    end
 
     demo_users = User.where({ :demo => true })
 
@@ -20,16 +32,16 @@ class ReadingGenerationJob
         user.hub.sensors.count == 4
 
         SensorReading.create(:sensor_id => user.hub.sensors[0].id,
-                             :watthours => ReadingGenerationJob.gen_computer_reading(time),
+                             :watthours => ReadingGenerationJob.gen_computer_reading(time) * rand_factor,
                              :created_at => time)
         SensorReading.create(:sensor_id => user.hub.sensors[1].id,
-                             :watthours => ReadingGenerationJob.gen_microwave_reading(time),
+                             :watthours => ReadingGenerationJob.gen_microwave_reading(time) * rand_factor,
                              :created_at => time)
         SensorReading.create(:sensor_id => user.hub.sensors[2].id,
-                             :watthours => ReadingGenerationJob.gen_entertainment_reading(time),
+                             :watthours => ReadingGenerationJob.gen_entertainment_reading(time) * rand_factor,
                              :created_at => time)
         SensorReading.create(:sensor_id => user.hub.sensors[3].id,
-                             :watthours => ReadingGenerationJob.gen_dishwasher_reading(time),
+                             :watthours => ReadingGenerationJob.gen_dishwasher_reading(time) * rand_factor,
                              :created_at => time)
       end
     end
@@ -55,10 +67,10 @@ class ReadingGenerationJob
 
   private
 
-  def self.perturb(wh_value)
-    perturbed_wh_value = wh_value + rand(-10..10)
-    perturbed_wh_value >= 0 ? perturbed_wh_value : 0
-  end
+  # def self.perturb(wh_value)
+  #   perturbed_wh_value = wh_value + rand(-10..10)
+  #   perturbed_wh_value >= 0 ? perturbed_wh_value : 0
+  # end
 
   # Note: staying away from UTC conversion for now, we'll see if I can get away
   # with that.
@@ -79,7 +91,7 @@ class ReadingGenerationJob
       wh_value = 0
     end
 
-    ReadingGenerationJob.perturb wh_value
+    # ReadingGenerationJob.perturb wh_value
   end
 
   def self.gen_microwave_reading(time)
@@ -101,7 +113,7 @@ class ReadingGenerationJob
       wh_value = 0
     end
 
-    ReadingGenerationJob.perturb wh_value
+    # ReadingGenerationJob.perturb wh_value
   end
 
   def self.gen_entertainment_reading(time)
@@ -112,7 +124,7 @@ class ReadingGenerationJob
       wh_value = 350
     end
 
-    ReadingGenerationJob.perturb wh_value
+    # ReadingGenerationJob.perturb wh_value
   end
 
   def self.gen_dishwasher_reading(time)
@@ -125,6 +137,6 @@ class ReadingGenerationJob
       wh_value = 0
     end
 
-    ReadingGenerationJob.perturb wh_value
+    # ReadingGenerationJob.perturb wh_value
   end
 end

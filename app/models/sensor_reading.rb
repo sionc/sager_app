@@ -1,5 +1,5 @@
 class SensorReading < ActiveRecord::Base
-  attr_accessible :sensor_id, :watthours, :sensor_local_id
+  attr_accessible :sensor_id, :watthours, :sensor_local_id, :created_at
   #
   # Associations
   #

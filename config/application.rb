@@ -55,5 +55,20 @@ module SagerApp
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # PolarMeter - initialize background job(s)
+
+    # don't queue the same job twice if it already exists in the db
+    # also, chicken && egg problem here:
+    #   migration uses this code before migrating, BUT
+    #   this code needs the table to exists before executing
+    # will come up with a solution soon.
+    config.after_initialize do
+      if ActiveRecord::Base.connection.table_exists?('delayed_jobs')
+        unless Delayed::Job.all.reduce(false) { |sum, x| sum || x.handler.include?("ReadingGenerationJob") }
+          Delayed::Job.enqueue ReadingGenerationJob.new
+        end
+      end
+    end
   end
 end

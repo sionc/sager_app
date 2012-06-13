@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.5'
 gem 'jquery-rails', '2.0.0'
-gem 'bootstrap-sass', '2.0.0'
+gem 'bootstrap-sass', '2.0.3'
 gem 'devise', '2.1.0'
 gem 'execjs'
 gem 'therubyracer'

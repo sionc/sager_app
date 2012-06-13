@@ -1,0 +1,39 @@
+.budget-content {
+   padding: 20px;
+}
+
+.budget-sensor {
+  float:left;
+}
+
+.budget-notify {
+  float:left;
+}
+
+.budget-amounts {
+  float:right;
+}
+
+.budget-amount-expected {
+   font-size: 15px;
+   font-weight: bold;
+   //height: 15px;
+   //border: none;
+   //box-shadow: none;
+   color: green;
+   text-align:left;
+}
+
+.budget-amount-current {
+   font-size: 15px;
+   font-weight: bold;
+   //height: 15px;
+   border: none;
+   box-shadow: none;
+   color: green;
+   text-align:right;
+}
+
+.budget-energy {
+   float:right;
+}

@@ -12,6 +12,7 @@ SagerApp::Application.routes.draw do
   get "pages/about"
   get "pages/trends"
   get "pages/start"
+  get "pages/budgets"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

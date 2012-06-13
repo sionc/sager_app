@@ -20,22 +20,6 @@ var getSensorData = function() {
     });
 };
 
-// Get total usage data
-var getTotalUsageData = function() {
-    $.ajax({
-        type: 'GET',
-        url: '',
-        async: false,
-        dataType: 'xml',
-        success: parseTotalUsageData
-    });
-};
-
-// Parse the total usage data
-var parseTotalUsageData = function(totalUsageData){
-    alert(totalUsageData.length);
-};
-
 // Parse the sensor data
 var parseSensorData = function(sensorData){
     if(sensorData.sensors.length == 0)
@@ -219,15 +203,21 @@ var display7DayUsageChart = function() {
 
     // Chart data
     var colors = Highcharts.getOptions().colors;
-    var totalUsage = [18, 12, 16, 14, 13, 12, 11];
     var data = new Array;
     for (i = 0; i < categories.length; i++) {
         var sensorUsageByDay = new Array;
         for(j = 0; j < sensors.length; j++) {
             sensorUsageByDay.push(sensors[j].last_7_day_kwh_usage_by_day[i]);
         }
+
+        var k = 0;
+        var totalUsageByDay = 0.0;
+        for(k = 0; k < sensorUsageByDay.length; k++){
+            totalUsageByDay = totalUsageByDay + sensorUsageByDay[k];
+        }
+
         data.push({
-            y: totalUsage[i],
+            y: Math.round(totalUsageByDay*100)/100,
             color: colors[0],
             drilldown: {
                 name: categories[i].toString(),
@@ -332,8 +322,6 @@ var display7DayUsageChart = function() {
 
 $(function() {
     getSensorData();
-    //getTotalUsageData();
     listDevices();
-    //displayWeeklyUsageChart();
     display7DayUsageChart();
 });

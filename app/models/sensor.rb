@@ -9,8 +9,7 @@ class Sensor < ActiveRecord::Base
 
   # This could be a waste of time given the already existing unique index on these two fields
   validates_uniqueness_of :local_id, :scope => [:local_id, :hub_id]
-
-  #
+#
   # Associations
   #
   belongs_to :hub
@@ -23,10 +22,10 @@ class Sensor < ActiveRecord::Base
   # Add virtual attributes to JSON hash
   def as_json(options = { })
     super((options || { }).merge({
-        :methods => [:current_hour_kwh_usage,
-                     :current_day_kwh_usage,
-                     :current_week_kwh_usage,
-                     :last_7_day_kwh_usage_by_day]
+      :methods => [:current_hour_kwh_usage,
+                   :current_day_kwh_usage,
+                   :current_week_kwh_usage,
+                   :last_7_day_kwh_usage_by_day]
     }))
   end
 

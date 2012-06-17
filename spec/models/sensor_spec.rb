@@ -60,7 +60,8 @@ describe Sensor do
     cumulative_usage = (1337 * num_readings).to_f
     average_usage = cumulative_usage/60
     kwh_usage = average_usage/1000
-    sensor1.total_hour_kwh_usage_on(time.to_date, time.hour).should == kwh_usage
+    sensor1.total_hour_kwh_usage_on(time.to_date, time.hour).
+      should be_within(1.0e-16).of(kwh_usage)
   end
 
   it 'should calculate kwh usage for a given date' do
@@ -83,7 +84,8 @@ describe Sensor do
     cumulative_usage_per_hour = (1337 * num_readings).to_f
     average_usage_per_hour = cumulative_usage_per_hour/60
     kwh_usage_per_hour = average_usage_per_hour/1000
-    sensor1.total_day_kwh_usage_on(time.to_date).should == (kwh_usage_per_hour * num_hours)
+    sensor1.total_day_kwh_usage_on(time.to_date).
+      should be_within(1.0e-16).of(kwh_usage_per_hour * num_hours)
   end
 
    it 'should calculate kwh usage for the week until the given date' do
@@ -112,7 +114,8 @@ describe Sensor do
     average_usage_per_hour = cumulative_usage_per_hour/60
     kwh_usage_per_hour = average_usage_per_hour/1000
     kwh_usage_per_day =  kwh_usage_per_hour * num_hours
-    sensor1.total_week_kwh_usage_until(time.to_date).should == (kwh_usage_per_day * num_days)
+    sensor1.total_week_kwh_usage_until(time.to_date).
+      should be_within(1.0e-14).of(kwh_usage_per_day * num_days)
    end
 
   it 'should calculate kwh usage for the month until the given date' do
@@ -141,6 +144,7 @@ describe Sensor do
     average_usage_per_hour = cumulative_usage_per_hour/60
     kwh_usage_per_hour = average_usage_per_hour/1000
     kwh_usage_per_day =  kwh_usage_per_hour * num_hours
-    sensor1.total_month_kwh_usage_until(time.to_date).should == (kwh_usage_per_day * num_days)
+    sensor1.total_month_kwh_usage_until(time.to_date).
+      should be_within(1.0e-14).of(kwh_usage_per_day * num_days)
    end
 end

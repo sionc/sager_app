@@ -77,17 +77,14 @@ class Sensor < ActiveRecord::Base
 
     return 0.0 unless lower < Time.now.utc
 
-    readings = self.sensor_readings.where(:created_at => lower..upper)
-
-    cumulative_watthours_usage = 0.0
-    readings.each do |reading|
-      cumulative_watthours_usage += reading.watthours
-    end
-
-    average_watthours_usage = cumulative_watthours_usage/60
-    kwh_usage = average_watthours_usage/1000
-    kwh_usage
-  end
+    connection = ActiveRecord::Base.connection()
+    pgresult = connection.execute(
+      "SELECT cast (SUM(watthours) as float)/60/1000
+        FROM sensor_readings
+        WHERE sensor_id = #{self.id}
+        AND created_at BETWEEN '#{lower}' and '#{upper}'")
+    output = pgresult.nil? ? 0.0 : pgresult[0].values[0].to_f
+end
 
   # Calculate the total kwh usage for a given date (UTC)
   def total_day_kwh_usage_on(date)

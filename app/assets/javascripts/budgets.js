@@ -1,10 +1,10 @@
 // Get data associated with budget sensors
 var displayBudgetWidgets = function() {
- updateBudgetWidgets(15, 20, 0);
- updateBudgetWidgets(4, 5, 1);
- updateBudgetWidgets(6, 5, 2);
- updateBudgetWidgets(4, 5, 3);
- updateBudgetWidgets(3, 5, 4);
+ updateBudgetWidgets(82.74, 130.00, 0);
+ updateBudgetWidgets(13.35, 20.00, 1);
+ updateBudgetWidgets(6.75, 8.00, 2);
+ updateBudgetWidgets(32.37, 30.00, 3);
+ updateBudgetWidgets(5.78, 15.00, 4);
 };
 
 var updateBudgetWidgets = function(current, expected, divId){

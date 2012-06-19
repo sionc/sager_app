@@ -79,11 +79,11 @@ class Sensor < ActiveRecord::Base
 
     connection = ActiveRecord::Base.connection()
     pgresult = connection.execute(
-      "SELECT cast (SUM(watthours) as float)/60/1000
+      "SELECT SUM(watthours)
         FROM sensor_readings
-        WHERE sensor_id = #{self.id}
+        WHERE sensor_id = #{id}
         AND created_at BETWEEN '#{lower}' and '#{upper}'")
-    output = pgresult.nil? ? 0.0 : pgresult[0].values[0].to_f
+    output = pgresult.nil? ? 0.0 : (pgresult[0].values[0].to_f)/60/1000
 end
 
   # Calculate the total kwh usage for a given date (UTC)

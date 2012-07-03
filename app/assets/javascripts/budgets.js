@@ -137,6 +137,6 @@ var amountExpectedChangeHandler = function(){
 };
 
 $(function() {
-  getBudgetData();
-  initializeBudgetWidgets();
+//  getBudgetData();
+//  initializeBudgetWidgets();
 });

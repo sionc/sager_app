@@ -16,7 +16,7 @@ class PagesController < ApplicationController
   def start
     respond_to do |format|
       if user_signed_in?
-        format.html { redirect_to pages_home_path }
+        format.html { redirect_to sensors_path }
       else
         format.html
       end

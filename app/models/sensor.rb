@@ -18,15 +18,15 @@ class Sensor < ActiveRecord::Base
   # The following section needs to move to a controller or helper method
   # -----------------------------------------------------------
   # Add virtual attributes to JSON hash
-  def as_json(options = { })
-    super((options || { }).merge({
-        :methods => [:current_hour_kwh_usage,
-                     :current_day_kwh_usage,
-                     :current_week_kwh_usage,
-                     :last_7_day_kwh_usage_by_day,
-                     :current_month_kwh_usage_by_day]
-    }))
-  end
+  #def as_json(options = { })
+  #  super((options || { }).merge({
+  #      :methods => [:current_hour_kwh_usage,
+  #                   :current_day_kwh_usage,
+  #                   :current_week_kwh_usage,
+  #                   :last_7_day_kwh_usage_by_day,
+  #                   :current_month_kwh_usage_by_day]
+  #  }))
+  #end
 
   # Get the total kwh usage for the current hour
   def current_hour_kwh_usage

@@ -430,8 +430,8 @@ var createDateString = function(daysAgo) {
 };
 
 $(function() {
-    getSensorData();
-    listDevices();
-    display7DayUsageChart();
-    displayUsageSummary();
+    //getSensorData();
+    //listDevices();
+    //display7DayUsageChart();
+    //displayUsageSummary();
 });

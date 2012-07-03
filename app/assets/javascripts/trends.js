@@ -109,5 +109,5 @@ var displayTotalUsageChart = function(totalUsageData) {
 
 
 $(function() {
-    getTotalUsageData();
+    //getTotalUsageData();
 });

@@ -1,35 +1,24 @@
-<!--<p id="notice"><%#= notice %></p>-->
+<p id="notice"><%= notice %></p>
 
-<div class="row-fluid">
-  <div class="span3">
-    <div class="content">
-      <div class="ui-widget ui-widget-content">
-      </div>
-    </div>
-  </div>
-  <div class="span9">
-    <div class="content">
-      <div class="ui-widget ui-widget-content">
-      </div>
-    </div>
-  </div>
-</div>
+<p>
+  <b>Label:</b>
+  <%= @sensor.label %>
+</p>
 
+<p>
+  <b>Mac Address:</b>
+  <%= @sensor.mac_address %>
+</p>
 
-<!--<p>-->
-  <!--<b>Name:</b>-->
-  <!--<%#= @sensor.name %>-->
-<!--</p>-->
+<p>
+  <b>Enabled:</b>
+  <%= @sensor.enabled %>
+</p>
 
-<!--<p>-->
-  <!--<b>Hub:</b>-->
-  <!--<%#= @sensor.hub_id %>-->
-<!--</p>-->
+<p>
+  <b>Plus:</b>
+  <%= @sensor.plus %>
+</p>
 
-<!--<p>-->
-  <!--<b>Local Id:</b>-->
-  <!--<%#= @sensor.local_id %>-->
-<!--</p>-->
-
-<%#= link_to 'Edit', edit_sensor_path(@sensor) %> |
-<%#= link_to 'Back', sensors_path %>
+<%= link_to 'Edit', edit_sensor_path(@sensor) %> |
+<%= link_to 'Back', sensors_path %>

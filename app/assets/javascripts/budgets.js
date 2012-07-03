@@ -77,11 +77,11 @@ var createBudgetWidget = function(container, divId, name) {
     var amountsForm = $("<form></form>").addClass("budget-amounts form-inline").appendTo(amountsSpan);
     var amountCurrentDiv = $("<div></div>").addClass("input-prepend").appendTo(amountsForm);
     $("<span>$</span>").addClass("add-on").appendTo(amountCurrentDiv);
-    $("<input size=8 type='text' disabled=''>").addClass("budget-amount-current span7 disabled")
+    $("<input size=10 type='text' disabled=''>").addClass("budget-amount-current span6 disabled")
         .attr('id', 'amount-current-'+divId).appendTo(amountCurrentDiv);
     var amountExpectedDiv = $("<div></div>").addClass("input-prepend").appendTo(amountsForm);
     $("<span>$</span>").addClass("add-on").appendTo(amountExpectedDiv);
-    $("<input size=8 type='text'>").addClass("budget-amount-expected span7 disabled")
+    $("<input size=10 type='text'>").addClass("budget-amount-expected span6 disabled")
         .attr('id', 'amount-expected-'+divId).appendTo(amountExpectedDiv);
 
     // Row 2 divs

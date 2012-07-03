@@ -17,17 +17,26 @@
 
 $(function() {
     var pathname = window.location.pathname;
+
     if (pathname == "/pages/home") {
       $("#home_tab").addClass("active");
       $("#trends_tab").removeClass("active");
       $("#budgets_tab").removeClass("active");
+      $("#sensors_tab").removeClass("active");
     } else if (pathname == "/pages/trends") {
       $("#home_tab").removeClass("active");
       $("#trends_tab").addClass("active");
       $("#budgets_tab").removeClass("active");
-    } else {
+      $("#sensors_tab").removeClass("active");
+    } else if (pathname == "/pages/budgets"){
       $("#home_tab").removeClass("active");
       $("#trends_tab").removeClass("active");
       $("#budgets_tab").addClass("active");
+      $("#sensors_tab").removeClass("active");
+    } else {
+      $("#home_tab").removeClass("active");
+      $("#trends_tab").removeClass("active");
+      $("#budgets_tab").removeClass("active");
+      $("#sensors_tab").addClass("active");
     }
 });

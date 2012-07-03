@@ -12,6 +12,8 @@
  *= require_tree .
 */
 
+#main-content-container  { min-height:450px;} * html #sensor-list-container { height:450px; }
+
 #sign-in-container {
  padding: 50px 80px;
 }

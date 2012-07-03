@@ -1,6 +1,5 @@
-<h1>Listing sensors</h1>
-
-<table>
+<table class="table table-striped">
+  <thead>
   <tr>
     <th>Name</th>
     <th>Hub</th>
@@ -9,19 +8,22 @@
     <th></th>
     <th></th>
   </tr>
+  </thead>
 
-<% @sensors.each do |sensor| %>
-  <tr>
-    <td><%= sensor.name %></td>
-    <td><%= sensor.hub_id %></td>
-    <td><%= sensor.local_id %></td>
-    <td><%= link_to 'Show', sensor %></td>
-    <td><%= link_to 'Edit', edit_sensor_path(sensor) %></td>
-    <td><%= link_to 'Destroy', sensor, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
+  <tbody>
+  <% @sensors.each do |sensor| %>
+      <tr>
+        <td><%= sensor.name %></td>
+        <td><%= sensor.hub_id %></td>
+        <td><%= sensor.local_id %></td>
+        <td><%= link_to 'Show', sensor %></td>
+        <td><%= link_to 'Edit', edit_sensor_path(sensor) %></td>
+        <td><%= link_to 'Destroy', sensor, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+  <% end %>
+  </tbody>
 </table>
 
-<br />
+<br/>
 
-<%= link_to 'New Sensor', new_sensor_path %>
+<%#= button_to 'Add sensor', new_sensor_path, :class => "btn btn-primary" %>

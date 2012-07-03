@@ -13,7 +13,12 @@ class SensorsController < ApplicationController
   # GET /sensors
   # GET /sensors.json
   def index
-    @sensor = Sensor.accessible_by(current_ability)
+    if params[:mac_address].present?
+      #sensors_found = Sensor.where(:mac_address => params[:mac_address])
+      @sensors = Sensor.find(:all, :conditions => {:mac_address => params[:mac_address]})
+    else
+      @sensors = Sensor.accessible_by(current_ability)
+    end
 
     respond_to do |format|
       format.html # index.html.erb

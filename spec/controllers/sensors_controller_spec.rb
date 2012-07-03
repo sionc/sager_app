@@ -61,7 +61,14 @@ describe SensorsController do
         sensor = FactoryGirl.create(:sensor, :user => @user)
         get :index, {}
         assigns(:sensors).should eq([sensor])
-     end
+      end
+
+      it "assigns current user's sensors with the provided MAC address as @sensors" do
+        sensor1 = FactoryGirl.create(:sensor, :user => @user)
+        sensor2 = FactoryGirl.create(:sensor, :user => @user)
+        get :index, {:mac_address => sensor2.mac_address}
+        assigns(:sensors).should eq([sensor2])
+      end
     end
 
     describe "GET show" do

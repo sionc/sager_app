@@ -1,9 +1,10 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th>Name</th>
-    <th>Hub</th>
-    <th>Local Id</th>
+    <th>Label</th>
+    <th>MAC address</th>
+    <th>Enabled</th>
+    <th>Circle +</th>
     <th></th>
     <th></th>
     <th></th>
@@ -13,9 +14,10 @@
   <tbody>
   <% @sensors.each do |sensor| %>
       <tr>
-        <td><%= sensor.name %></td>
-        <td><%= sensor.hub_id %></td>
-        <td><%= sensor.local_id %></td>
+        <td><%= sensor.label %></td>
+        <td><%= sensor.mac_address %></td>
+        <td><%= sensor.enabled %></td>
+        <td><%= sensor.plus %></td>
         <td><%= link_to 'Show', sensor %></td>
         <td><%= link_to 'Edit', edit_sensor_path(sensor) %></td>
         <td><%= link_to 'Destroy', sensor, confirm: 'Are you sure?', method: :delete %></td>

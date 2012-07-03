@@ -29,15 +29,6 @@ ActiveRecord::Schema.define(:version => 20120703073848) do
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
-  create_table "hubs", :force => true do |t|
-    t.string   "mac_address"
-    t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "hubs", ["mac_address"], :name => "index_hubs_on_mac_address", :unique => true
-
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false

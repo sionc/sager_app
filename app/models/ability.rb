@@ -31,11 +31,9 @@ class Ability
       can :manage, :all
     else
       can :manage, User, :id => user.id
-      can :manage, Hub, :user_id => user.id
-      can :create, Hub
-      can :manage, Sensor, :hub => { :user_id => user.id }
+      can :manage, Sensor, :user_id => user.id
       can :create, Sensor
-      can :read, SensorReading, :sensor => { :hub => { :user_id => user.id } }
+      can :read, SensorReading, :sensor => { :user_id => user.id }
     end
   end
 end

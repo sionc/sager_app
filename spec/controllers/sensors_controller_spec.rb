@@ -47,24 +47,18 @@ describe SensorsController do
       # @request.env["devise.mapping"] = Devise.mappings[:user]
       @user = FactoryGirl.create(:user)
       sign_in @user
-      @hub = FactoryGirl.create(:hub, :user => @user)
     end
 
     # This should return the minimal set of attributes required to create a valid
     # Sensor. As you add validations to Sensor, be sure to
     # update the return value of this method accordingly.
     def valid_attributes
-      {:hub_id => @hub.id}.merge(FactoryGirl.attributes_for(:sensor))
+      {:user_id => @user.id}.merge(FactoryGirl.attributes_for(:sensor))
     end
 
     describe "GET index" do
-      #it "assigns all sensors as @sensors" do
-      #  sensor = FactoryGirl.create(:sensor, :hub => @hub)
-      #  get :index, {}
-      #  assigns(:sensors).should eq([sensor])
-      #end
       it "assigns current user's sensors as @sensors" do
-        sensor = FactoryGirl.create(:sensor, :hub => @hub)
+        sensor = FactoryGirl.create(:sensor, :user => @user)
         get :index, {}
         assigns(:sensors).should eq([sensor])
      end
@@ -72,7 +66,7 @@ describe SensorsController do
 
     describe "GET show" do
       it "assigns the requested sensor as @sensor" do
-        sensor = FactoryGirl.create(:sensor, :hub => @hub)
+        sensor = FactoryGirl.create(:sensor, :user => @user)
         get :show, {:id => sensor.to_param}
         assigns(:sensor).should eq(sensor)
       end
@@ -87,7 +81,7 @@ describe SensorsController do
 
     describe "GET edit" do
       it "assigns the requested sensor as @sensor" do
-        sensor = FactoryGirl.create(:sensor, :hub => @hub)
+        sensor = FactoryGirl.create(:sensor, :user => @user)
         get :edit, {:id => sensor.to_param}
         assigns(:sensor).should eq(sensor)
       end
@@ -133,7 +127,7 @@ describe SensorsController do
     describe "PUT update" do
       describe "with valid params" do
         it "updates the requested sensor" do
-          sensor = FactoryGirl.create(:sensor, :hub => @hub)
+          sensor = FactoryGirl.create(:sensor, :user => @user)
           # Assuming there are no other sensors in the database, this
           # specifies that the Sensor created on the previous line
           # receives the :update_attributes message with whatever params are
@@ -143,13 +137,13 @@ describe SensorsController do
         end
 
         it "assigns the requested sensor as @sensor" do
-          sensor = FactoryGirl.create(:sensor, :hub => @hub)
+          sensor = FactoryGirl.create(:sensor, :user => @user)
           put :update, {:id => sensor.to_param, :sensor => valid_attributes}
           assigns(:sensor).should eq(sensor)
         end
 
         it "redirects to the sensor" do
-          sensor = FactoryGirl.create(:sensor, :hub => @hub)
+          sensor = FactoryGirl.create(:sensor, :user => @user)
           put :update, {:id => sensor.to_param, :sensor => valid_attributes}
           response.should redirect_to(sensor)
         end
@@ -157,7 +151,7 @@ describe SensorsController do
 
       describe "with invalid params" do
         it "assigns the sensor as @sensor" do
-          sensor = FactoryGirl.create(:sensor, :hub => @hub)
+          sensor = FactoryGirl.create(:sensor, :user => @user)
           # Trigger the behavior that occurs when invalid params are submitted
           Sensor.any_instance.stub(:save).and_return(false)
           put :update, {:id => sensor.to_param, :sensor => {}}
@@ -165,7 +159,7 @@ describe SensorsController do
         end
 
         it "re-renders the 'edit' template" do
-          sensor = FactoryGirl.create(:sensor, :hub => @hub)
+          sensor = FactoryGirl.create(:sensor, :user => @user)
           # Trigger the behavior that occurs when invalid params are submitted
           Sensor.any_instance.stub(:save).and_return(false)
           put :update, {:id => sensor.to_param, :sensor => {}}
@@ -176,14 +170,14 @@ describe SensorsController do
 
     describe "DELETE destroy" do
       it "destroys the requested sensor" do
-        sensor = FactoryGirl.create(:sensor, :hub => @hub)
+        sensor = FactoryGirl.create(:sensor, :user => @user)
         expect {
           delete :destroy, {:id => sensor.to_param}
         }.to change(Sensor, :count).by(-1)
       end
 
       it "redirects to the sensors list" do
-        sensor = FactoryGirl.create(:sensor, :hub => @hub)
+        sensor = FactoryGirl.create(:sensor, :user => @user)
         delete :destroy, {:id => sensor.to_param}
         response.should redirect_to(sensors_url)
       end

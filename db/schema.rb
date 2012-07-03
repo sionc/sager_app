@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120617073037) do
+ActiveRecord::Schema.define(:version => 20120703073848) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -59,15 +59,16 @@ ActiveRecord::Schema.define(:version => 20120617073037) do
   add_index "sensor_readings", ["sensor_id"], :name => "index_sensor_readings_on_sensor_id"
 
   create_table "sensors", :force => true do |t|
-    t.string   "name"
-    t.integer  "hub_id"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-    t.integer  "local_id",   :default => 0, :null => false
+    t.string   "label"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "mac_address"
+    t.boolean  "enabled"
+    t.boolean  "plus"
+    t.integer  "user_id"
   end
 
-  add_index "sensors", ["hub_id", "local_id"], :name => "index_sensors_on_hub_id_and_local_id", :unique => true
-  add_index "sensors", ["hub_id"], :name => "index_sensors_on_hub_id"
+  add_index "sensors", ["mac_address"], :name => "index_sensors_on_mac_address", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",    :null => false

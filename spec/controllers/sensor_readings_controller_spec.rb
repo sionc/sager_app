@@ -44,32 +44,27 @@ describe SensorReadingsController do
           sensor = FactoryGirl.create(:sensor)
           expect {
             post :create, { :sensor_reading => { :watthours => 99,
-                                                 :local_id => sensor.local_id,
-                                                 :mac_address => sensor.hub.mac_address } }
+                                                 :mac_address => sensor.mac_address } }
           }.to change(SensorReading, :count).by(1)
         end
       end
 
-      it "should lead to 2 different hubs with two different MACs" do
-        hub = FactoryGirl.create(:hub)
-        hub2 = FactoryGirl.create(:hub)
-        sensor = FactoryGirl.create(:sensor, :hub => hub)
-        sensor2 = FactoryGirl.create(:sensor, :hub => hub2)
+      it "should be assigned to two different sensors for readings originating from two different MACs " do
+        sensor1 = FactoryGirl.create(:sensor)
+        sensor2 = FactoryGirl.create(:sensor)
 
         post :create, { :sensor_reading => { :watthours => 1,
-                                             :local_id => sensor.local_id,
-                                             :mac_address => hub.mac_address } }
-        sensor_reading = SensorReading.last
+                                             :mac_address => sensor1.mac_address } }
+        sensor_reading1 = SensorReading.last
         post :create, { :sensor_reading => { :watthours => 2,
-                                             :local_id => sensor2.local_id,
-                                             :mac_address => hub2.mac_address } }
+                                             :mac_address => sensor2.mac_address } }
         sensor_reading2 = SensorReading.last
 
         # being extra nutty careful here
-        sensor_reading.sensor.should_not equal(sensor_reading2.sensor)
-        sensor_reading.sensor.should == sensor
+        sensor_reading1.sensor.should_not equal(sensor_reading2.sensor)
+        sensor_reading1.sensor.should == sensor1
         sensor_reading2.sensor.should == sensor2
-        sensor_reading.sensor.hub.should_not == sensor_reading2.sensor.hub
+        sensor_reading1.sensor.should_not == sensor_reading2.sensor
       end
 
       describe "with invalid params" do
@@ -89,8 +84,7 @@ describe SensorReadingsController do
       # @request.env["devise.mapping"] = Devise.mappings[:user]
       @user = FactoryGirl.create(:user)
       sign_in @user
-      @hub = FactoryGirl.create(:hub, :user => @user)
-      @sensor = FactoryGirl.create(:sensor, :hub => @hub)
+      @sensor = FactoryGirl.create(:sensor, :user => @user)
     end
 
     describe "GET index" do

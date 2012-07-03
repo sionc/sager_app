@@ -16,8 +16,7 @@ class User < ActiveRecord::Base
   #
   # Associations
   #
-  has_one :hub
-  has_many :sensors, :through => :hub
+  has_many :sensors
   has_and_belongs_to_many :roles
 
   # fetches role of user

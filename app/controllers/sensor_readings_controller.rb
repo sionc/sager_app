@@ -39,18 +39,13 @@ class SensorReadingsController < ApplicationController
 
     # input validation
     unless(params[:sensor_reading][:mac_address].nil? ||
-           params[:sensor_reading][:local_id].nil? ||
            params[:sensor_reading][:watthours].nil?)
       logger.debug 'input valid!'
       logger.debug "Params hash: #{params.inspect}"
 
-      # given the mac address, we can find the hub
-      hub = Hub.find_by_mac_address(params[:sensor_reading][:mac_address])
-      logger.debug "hub attributes: #{hub.attributes.inspect}"
-
-      # given the hub, the local_id  can be used to identify a single sensor
-      sensor = Sensor.find_by_hub_id_and_local_id hub.id, params[:sensor_reading][:local_id]
-      logger.debug "sensor attributes: #{sensor.attributes.inspect}"
+      # given the mac address, we can find the sensor
+      sensor = Sensor.find_by_mac_address(params[:sensor_reading][:mac_address])
+      logger.debug "hub attributes: #{sensor.attributes.inspect}"
 
       # we then store the reading for that specific sensor
       @sensor_reading = SensorReading.new(:sensor_id => sensor.id,

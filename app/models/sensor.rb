@@ -1,19 +1,17 @@
 class Sensor < ActiveRecord::Base
-  attr_accessible :hub_id, :name, :local_id
+  attr_accessible :user_id, :mac_address, :label, :enabled, :plus
 
   #
   # Validations
   #
-  validates_presence_of :name
-  validates_uniqueness_of :name, :scope => [:name, :hub_id]
+  validates_presence_of :mac_address
+  validates_uniqueness_of :mac_address
+  validates_presence_of :user
 
-  # This could be a waste of time given the already existing unique index on these two fields
-  validates_uniqueness_of :local_id, :scope => [:local_id, :hub_id]
-#
+  #
   # Associations
   #
-  belongs_to :hub
-  validates_presence_of :hub
+  belongs_to :user
   has_many :sensor_readings
 
 

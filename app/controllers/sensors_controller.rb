@@ -3,22 +3,27 @@ class SensorsController < ApplicationController
   #
   # Devise
   #
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => :index
 
   #
   # CanCan
   #
   load_and_authorize_resource
+  skip_authorize_resource :only => :index
 
   # GET /sensors
   # GET /sensors.json
   def index
-    if params[:mac_address].present?
-      #sensors_found = Sensor.where(:mac_address => params[:mac_address])
-      @sensors = Sensor.find(:all, :conditions => {:mac_address => params[:mac_address]})
-    else
-      @sensors = Sensor.accessible_by(current_ability)
-    end
+    # if params[:mac_address].present?
+    #   #sensors_found = Sensor.where(:mac_address => params[:mac_address])
+    #   @sensors = Sensor.find(:all, :conditions => {:mac_address => params[:mac_address]})
+    # else
+    #   @sensors = Sensor.accessible_by(current_ability)
+    # end
+
+    # I don't envision passing the mac address at this point, instead some kind
+    # of unique user identifier. This is a workaround for now.
+    @sensors = Sensor.all
 
     respond_to do |format|
       format.html # index.html.erb

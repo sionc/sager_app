@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120703073848) do
+ActiveRecord::Schema.define(:version => 20120705061856) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -39,6 +39,17 @@ ActiveRecord::Schema.define(:version => 20120703073848) do
     t.integer "role_id"
     t.integer "user_id"
   end
+
+  create_table "schedules", :force => true do |t|
+    t.time     "start_time"
+    t.time     "end_time"
+    t.integer  "sensor_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "schedules", ["sensor_id", "created_at"], :name => "index_schedules_on_sensor_id_and_created_at"
+  add_index "schedules", ["sensor_id"], :name => "index_schedules_on_sensor_id"
 
   create_table "sensor_readings", :force => true do |t|
     t.integer  "watthours",  :default => 0, :null => false

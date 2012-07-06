@@ -3,13 +3,13 @@ class SensorsController < ApplicationController
   #
   # Devise
   #
-  before_filter :authenticate_user!, :except => :index
+  before_filter :authenticate_user!, :except => [:index]
 
   #
   # CanCan
   #
   load_and_authorize_resource
-  skip_authorize_resource :only => :index
+  skip_authorize_resource :only => [:index]
 
   # GET /sensors
   # GET /sensors.json

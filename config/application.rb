@@ -72,5 +72,8 @@ module SagerApp
     #     end
     #   end
     # end
+
+    # Add app/assets/fonts to the asset path
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
   end
 end

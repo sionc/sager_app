@@ -5,6 +5,11 @@ $iconWhiteSpritePath: image-url('glyphicons-halflings-white.png');
 body { padding-top: 60px; }
 @import "bootstrap-responsive";
 
+/*Using Font-Awesome, so need to disable glyphicons from bootstrap*/
+[class^="icon-"] {
+  background-image:none;
+}
+
 html {
   overflow-y: scroll;
 }

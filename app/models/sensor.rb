@@ -13,6 +13,7 @@ class Sensor < ActiveRecord::Base
   #
   belongs_to :user
   has_many :sensor_readings
+  has_many :schedules
 
 
   # The following section needs to move to a controller or helper method

@@ -13,10 +13,13 @@ class PagesController < ApplicationController
   def trends
   end
 
+  def dashboard
+  end
+
   def start
     respond_to do |format|
       if user_signed_in?
-        format.html { redirect_to sensors_path }
+        format.html { redirect_to pages_dashboard_path }
       else
         format.html
       end

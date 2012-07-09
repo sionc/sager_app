@@ -34,6 +34,8 @@ class Ability
       can :manage, Sensor, :user_id => user.id
       can :create, Sensor
       can :read, SensorReading, :sensor => { :user_id => user.id }
+      # Security hole!!! Only modify schedules associated with user
+      can :manage, Schedule
     end
   end
 end

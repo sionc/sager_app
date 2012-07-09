@@ -39,6 +39,13 @@ FactoryGirl.define do
     sensor
   end
 
+  # Schedule factory
+  factory :schedule do
+    start_time 240
+    end_time 300
+    sensor
+  end
+
   # Role factory
   FactoryGirl.define do
     factory :role do

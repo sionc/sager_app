@@ -1,13 +1,29 @@
+ class SchedulesController < ApplicationController
+  #
+  # Devise
+  #
+  before_filter :authenticate_user!
 
-class SchedulesController < ApplicationController
+  #
+  # CanCan
+  #
+  load_and_authorize_resource
+
   # GET /schedules
   # GET /schedules.json
   def index
-    @schedules = Schedule.all
+    if params[:sensor_id].present?
+       #sensors_found = Sensor.where(:mac_address => params[:mac_address])
+       @schedules = Schedule.find(:all, :conditions => {:sensor_id => params[:sensor_id]})
+    else
+       @schedules = Schedule.accessible_by(current_ability)
+    end
+
+    #@schedules = Schedule.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @schedules }
+      format.json { render json: {:schedules => @schedules} }
     end
   end
 

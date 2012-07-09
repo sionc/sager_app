@@ -1,0 +1,76 @@
+.sensor-switch {
+  width:200px;
+  height:100px;
+  margin:10px;
+  font-size:50px;
+  /*float: left;*/
+}
+
+.usage-total {
+  width:200px;
+  height:80px;
+  margin:10px;
+  /*font-size:50px;*/
+   /*margin: 10px;*/
+    padding: 10px;
+    /*width: 150px;*/
+    /*height: 80px;*/
+    float: left;
+    text-align: center;
+}
+
+.schedule-list {
+  padding: 0px 20px 10px 20px;
+}
+
+// Responsive CSS
+@media (max-width: 480px) {
+    .sensor-switch {
+      width:200px;
+    }
+
+    .usage-total {
+      width:200px;
+    }
+}
+
+/*@media (max-width: 767px) {*/
+    /*.sensor-switch {*/
+      /*width:150px;*/
+    /*}*/
+
+    /*.usage-total {*/
+      /*width:150px;*/
+    /*}*/
+/*}*/
+
+/*@media (max-width: 979px) {*/
+    /*.sensor-switch {*/
+      /*width:100px;*/
+    /*}*/
+
+    /*.usage-total {*/
+      /*width:100px;*/
+    /*}*/
+/*}*/
+
+
+@media (max-width: 1200px) {
+    .sensor-switch {
+      width:150px;
+    }
+
+    .usage-total {
+      width:150px;
+    }
+}
+
+@media (min-width: 1201px) {
+    .sensor-switch {
+      width:200px;
+    }
+
+    .usage-total {
+      width:200px;
+    }
+}

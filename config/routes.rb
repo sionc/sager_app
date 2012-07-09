@@ -3,8 +3,6 @@ SagerApp::Application.routes.draw do
   resources :schedules
 
   devise_for :users
-
-  resources :hubs
   resources :sensors
   resources :sensor_readings, :only => [:index, :show, :create]
 
@@ -15,6 +13,7 @@ SagerApp::Application.routes.draw do
   get "pages/trends"
   get "pages/start"
   get "pages/budgets"
+  get "pages/dashboard"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

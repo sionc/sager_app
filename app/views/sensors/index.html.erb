@@ -5,6 +5,7 @@
     <th>MAC address</th>
     <th>Enabled</th>
     <th>Circle +</th>
+    <th>Scheduled off</th>
     <th></th>
     <th></th>
     <th></th>
@@ -18,6 +19,7 @@
         <td><%= sensor.mac_address %></td>
         <td><%= sensor.enabled %></td>
         <td><%= sensor.plus %></td>
+        <td><%= sensor.is_scheduled_to_be_off %></td>
         <td><%= link_to 'Show', sensor %></td>
         <td><%= link_to 'Edit', edit_sensor_path(sensor) %></td>
         <td><%= link_to 'Destroy', sensor, confirm: 'Are you sure?', method: :delete %></td>

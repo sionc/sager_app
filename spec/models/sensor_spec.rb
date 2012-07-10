@@ -118,5 +118,17 @@ describe Sensor do
     kwh_usage_per_day =  kwh_usage_per_hour * num_hours
     sensor1.total_month_kwh_usage_until(time.to_date).
       should be_within(1.0e-14).of(kwh_usage_per_day * num_days)
-   end
+  end
+
+  it 'should determine whether it needs to be off' do
+    sensor = FactoryGirl.create(:sensor)
+    offset_to_pdt = -25200
+    current_time = Time.now.utc + offset_to_pdt
+    current_time_minutes = (current_time.hour * 60) + current_time.min
+    start_time = current_time_minutes - 5
+    end_time = current_time_minutes + 5
+    FactoryGirl.create(:schedule, :sensor => sensor,
+                       :start_time => start_time, :end_time => end_time)
+    sensor.is_scheduled_to_be_off.should == true
+  end
 end

@@ -25,6 +25,10 @@ class SensorsController < ApplicationController
     # of unique user identifier. This is a workaround for now.
     @sensors = Sensor.all
 
+    @sensors.each do |sensor|
+      sensor.enabled = 0 if sensor.is_scheduled_to_be_off
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: {:sensors => @sensors} }

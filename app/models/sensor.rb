@@ -1,4 +1,5 @@
 class Sensor < ActiveRecord::Base
+  attr_accessor :is_scheduled_to_be_off
   attr_accessible :user_id, :mac_address, :label, :enabled, :plus
 
   #
@@ -19,15 +20,11 @@ class Sensor < ActiveRecord::Base
   # The following section needs to move to a controller or helper method
   # -----------------------------------------------------------
   # Add virtual attributes to JSON hash
-  #def as_json(options = { })
-  #  super((options || { }).merge({
-  #      :methods => [:current_hour_kwh_usage,
-  #                   :current_day_kwh_usage,
-  #                   :current_week_kwh_usage,
-  #                   :last_7_day_kwh_usage_by_day,
-  #                   :current_month_kwh_usage_by_day]
-  #  }))
-  #end
+  def as_json(options = { })
+    super((options || { }).merge({
+        :methods => [:current_month_kwh_usage_by_day]
+    }))
+  end
 
   # Get the total kwh usage for the current hour
   def current_hour_kwh_usage
@@ -117,5 +114,16 @@ end
       cumulative_daily_kwh_usage += self.total_day_kwh_usage_on(date - i.day)
     end
     cumulative_daily_kwh_usage
+  end
+
+  # Is the sensor scheduled to be off?
+  def is_scheduled_to_be_off
+    offset_to_pdt = -25200
+    current_time = Time.now.utc + offset_to_pdt
+    current_time_minutes = (current_time.hour * 60) + current_time.min
+    self.schedules.each do |schedule|
+      return true if (current_time_minutes > schedule.start_time) && (current_time_minutes < schedule.end_time)
+    end
+    false
   end
 end

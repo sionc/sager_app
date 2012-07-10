@@ -20,5 +20,10 @@
   <%= @sensor.plus %>
 </p>
 
+<p>
+  <b>Scheduled off:</b>
+  <%= @sensor.is_scheduled_to_be_off %>
+</p>
+
 <%= link_to 'Edit', edit_sensor_path(@sensor) %> |
 <%= link_to 'Back', sensors_path %>

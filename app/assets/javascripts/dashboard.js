@@ -202,10 +202,16 @@ var initializeSensorWidgets = function() {
             .addClass("btn btn-success sensor-switch").attr('data-toggle', 'button')
             .attr('id', sensorSwitchId).attr('autocomplete','off');
 
+        var usage_by_day = sensors[i].current_month_kwh_usage_by_day;
+        var sumUsage = 0;
+        var j = 0;
+        for (j = 0; j < usage_by_day.length; j++) {
+            sumUsage = sumUsage + usage_by_day[j];
+        }
         var sensorUsage = $("<div></div>").appendTo(sensorUsageCell).addClass("content well usage-total");
         $("<div><h6>This Month</h6></div>").appendTo(sensorUsage);
-        $("<div><h2>$20.45</h2></div>").appendTo(sensorUsage).attr('id','usage-cost-month');
-        $("<div><h6>2080 kWh</h6></div>").appendTo(sensorUsage).attr('id','usage-kwh-month');
+        $("<div><h2>$"+(sumUsage * 0.13).toFixed(2)+"</h2></div>").appendTo(sensorUsage).attr('id','usage-cost-month');
+        $("<div><h6>"+sumUsage+" kWh</h6></div>").appendTo(sensorUsage).attr('id','usage-kwh-month');
 
         // Add icon image to switch
         $("<i></i>").appendTo(sensorSwitch).addClass('icon-off icon-white icon-large');

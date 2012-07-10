@@ -3,7 +3,10 @@ SagerApp::Application.routes.draw do
   resources :schedules
 
   devise_for :users
+
+  match 'sensors/get_current_month_kwh_usage' => 'sensors#get_current_month_kwh_usage'
   resources :sensors
+
   resources :sensor_readings, :only => [:index, :show, :create]
 
   root :to => "pages#start"

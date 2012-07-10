@@ -105,4 +105,22 @@ class SensorsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  # GETs the kWh usage for each day of the current month
+  def get_current_month_kwh_usage
+    sensor = Sensor.find(params[:sensor_id])
+    current_month_kwh_usage_by_day = nil
+    current_month_kwh_usage_by_day = sensor.current_month_kwh_usage_by_day unless sensor.nil?
+    current_month_kwh_usage = 0
+
+    unless current_month_kwh_usage_by_day.nil?
+      current_month_kwh_usage_by_day.each do |usage|
+         current_month_kwh_usage = current_month_kwh_usage + usage
+      end
+    end
+
+    respond_to do |format|
+      format.json { render json: {:current_month_kwh_usage => current_month_kwh_usage } }
+    end
+  end
 end

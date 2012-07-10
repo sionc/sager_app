@@ -116,18 +116,12 @@ var updateSensorSwitchState = function(id, enabled) {
 // Get data associated with all sensors
 var getSensorsData = function() {
     sensors = [];
-    var container = "#sensors-container-1";
-
-    // If another page is loaded...
-    if ($(container).length == 0) {
-        return;
-    }
 
     $.ajax({
         type: 'GET',
         url: '/sensors',
         dataType: 'json',
-        timeout:2000,
+        timeout:20000,
         success: parseSensorsData
     });
 };
@@ -202,16 +196,11 @@ var initializeSensorWidgets = function() {
             .addClass("btn btn-success sensor-switch").attr('data-toggle', 'button')
             .attr('id', sensorSwitchId).attr('autocomplete','off');
 
-        var usage_by_day = sensors[i].current_month_kwh_usage_by_day;
-        var sumUsage = 0;
-        var j = 0;
-        for (j = 0; j < usage_by_day.length; j++) {
-            sumUsage = sumUsage + usage_by_day[j];
-        }
         var sensorUsage = $("<div></div>").appendTo(sensorUsageCell).addClass("content well usage-total");
         $("<div><h6>This Month</h6></div>").appendTo(sensorUsage);
-        $("<div><h2>$"+(sumUsage * 0.13).toFixed(2)+"</h2></div>").appendTo(sensorUsage).attr('id','usage-cost-month');
-        $("<div><h6>"+sumUsage+" kWh</h6></div>").appendTo(sensorUsage).attr('id','usage-kwh-month');
+        $("<div></div>").appendTo(sensorUsage).attr('id','usage-cost-month-'+sensorId);
+        $("<div></div>").appendTo(sensorUsage).attr('id','usage-kwh-month-'+sensorId);
+        getCurrentMonthKwhUsageData(parseInt(sensorId));
 
         // Add icon image to switch
         $("<i></i>").appendTo(sensorSwitch).addClass('icon-off icon-white icon-large');
@@ -335,7 +324,7 @@ var getScheduleData = function(sensorId) {
         url: '/schedules?sensor_id='+sensorId.toString(),
         dataType: 'json',
         async:false,
-        timeout:2000,
+        timeout:20000,
         success: parseScheduleData,
         error: function(){ alert("Failed to update schedules"); }
     }).done(initializeScheduleList(sensorId));
@@ -367,6 +356,22 @@ var updateScheduleList = function(sensorId, startTime, endTime) {
     var scheduleTableBodyRow = $("<tr></tr>").appendTo(scheduleTableBody);
     $("<td><p>"+startTime+"</p></td>").appendTo(scheduleTableBodyRow);
     $("<td><p>"+endTime+"</p></td>").appendTo(scheduleTableBodyRow);
+};
+
+// Get the current month's kwh usage data
+var getCurrentMonthKwhUsageData = function (sensorId) {
+    $.ajax({
+        type: 'GET',
+        url: '/sensors/get_current_month_kwh_usage',
+        data: {sensor_id:sensorId},
+        dataType: 'json',
+        timeout:20000,
+        success: function(data) {
+             var usage = data.current_month_kwh_usage;
+             $("<h2>$"+(usage * 0.13).toFixed(2)+"</h2>").appendTo("#usage-cost-month-"+sensorId.toString());
+             $("<h6>"+usage+" kWh</h6>").appendTo("#usage-kwh-month-"+sensorId.toString());
+        }
+    });
 };
 
 $(function() {

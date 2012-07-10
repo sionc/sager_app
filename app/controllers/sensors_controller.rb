@@ -120,7 +120,8 @@ class SensorsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render json: {:current_month_kwh_usage => current_month_kwh_usage } }
+      format.json { render json:
+          {:current_month_kwh_usage => current_month_kwh_usage } }
     end
   end
 end

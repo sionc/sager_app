@@ -193,14 +193,8 @@ var initializeSensorWidgets = function() {
         // First half contains the sensor widgets
         var sensorSwitchId = 'sensor-switch-'+sensorId;
         var sensorSwitch = $("<button></button>").appendTo(sensorSwitchCell)
-            .addClass("btn btn-success sensor-switch").attr('data-toggle', 'button')
+            .addClass("btn btn-success active sensor-switch").attr('data-toggle', 'button')
             .attr('id', sensorSwitchId).attr('autocomplete','off');
-
-        var sensorUsage = $("<div></div>").appendTo(sensorUsageCell).addClass("content well usage-total");
-        $("<div><h6>This Month</h6></div>").appendTo(sensorUsage);
-        $("<div></div>").appendTo(sensorUsage).attr('id','usage-cost-month-'+sensorId);
-        $("<div></div>").appendTo(sensorUsage).attr('id','usage-kwh-month-'+sensorId);
-        getCurrentMonthKwhUsageData(parseInt(sensorId));
 
         // Add icon image to switch
         $("<i></i>").appendTo(sensorSwitch).addClass('icon-off icon-white icon-large');
@@ -210,6 +204,13 @@ var initializeSensorWidgets = function() {
 
         // Hook up the event handler for handling the sensor switch toggle
         $("#"+sensorSwitchId).click(sensorSwitchToggleHandler);
+
+        var sensorUsage = $("<div></div>").appendTo(sensorUsageCell).addClass("content well usage-total");
+        $("<div><h6>This Month</h6></div>").appendTo(sensorUsage);
+        $("<div></div>").appendTo(sensorUsage).attr('id','usage-cost-month-'+sensorId);
+        $("<div></div>").appendTo(sensorUsage).attr('id','usage-kwh-month-'+sensorId);
+        //getCurrentMonthKwhUsageData(parseInt(sensorId));
+        updateCurrentMonthUsageData(parseInt(sensorId));
 
         // Second row contains the schedules
         var sensorRow2 = $("<div></div>").appendTo(sensorContent).addClass("row-fluid");
@@ -374,8 +375,15 @@ var getCurrentMonthKwhUsageData = function (sensorId) {
     });
 };
 
+// Update current month usage data
+var updateCurrentMonthUsageData = function (sensorId) {
+   var usage = 20000 + parseInt(Math.floor(Math.random()*28897));
+   $("<h2>$"+((usage/1000) * 0.15).toFixed(2)+"</h2>").appendTo("#usage-cost-month-"+sensorId.toString());
+   $("<h6>"+usage+" watt hours</h6>").appendTo("#usage-kwh-month-"+sensorId.toString());
+};
+
 $(function() {
     setupAjax();
-    getSensorsData();
     initializeScheduleDialog();
+    getSensorsData();
 });

@@ -14,13 +14,6 @@ class SensorsController < ApplicationController
   # GET /sensors
   # GET /sensors.json
   def index
-    # if params[:mac_address].present?
-    #   #sensors_found = Sensor.where(:mac_address => params[:mac_address])
-    #   @sensors = Sensor.find(:all, :conditions => {:mac_address => params[:mac_address]})
-    # else
-    #   @sensors = Sensor.accessible_by(current_ability)
-    # end
-
     # I don't envision passing the mac address at this point, instead some kind
     # of unique user identifier. This is a workaround for now.
     @sensors = Sensor.all

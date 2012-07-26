@@ -1,12 +1,99 @@
 <div id="sensor-content" class="row-fluid">
-  <div class="span6">
-     <div id="sensors-container-1">
-     </div>
-  </div>
-  <div class="span6">
-     <div id="sensors-container-2">
-     </div>
-  </div>
+  <% @sensors.sort_by { |s| s.label }.each_with_index do |sensor, index| %>
+    <div class="span6">
+      <div id="sensor-container-<%=index%>" data-id="<%=sensor.id%>" >
+        <div class="portlet ui-widget ui-widget-content ui-helper-clearfix">
+          <div class="portlet-header ui-widget-header ui-widget-header-text">
+            <span class="ui-icon ui-icon-minusthick"></span>
+            <h4><%=sensor.label%></h4>
+          </div>
+          <div class="portlet-content">
+            <div class="row-fluid">
+              <div class="span12">
+                <table class="table sensor-widgets-table">
+                  <thead>
+                    <tr>
+                      <th>
+                        <button autocomplete="off" id="sensor-switch-<%=index%>" 
+                          data-toggle="button"
+                          <%# Add the model's sensor id in here so we don't have to look it up %>
+                          <%# Set the initial button state to sensor enabled state %>
+                          <% if sensor.enabled %>
+                            class="btn sensor-switch active btn-success">
+                          <% else %>
+                            class="btn sensor-switch">
+                          <%end%>
+                          <i class="icon-off icon-white
+                            icon-large">
+                          </i>
+                        </button>
+                      </th>
+                      <th>
+                        <div class="content well usage-total">
+                          <div>
+                            <h6>This Month</h6>
+                          </div>
+                          <div id="usage-cost-month-3">
+                            <h2>$0.00</h2>
+                          </div>
+                          <div id="usage-kwh-month-3">
+                            <h6>0 kWh</h6>
+                          </div>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <%# Power off schedule diff within each widget %>
+            <div class="row-fluid">
+              <div class="span12 schedule-list">
+                <h5>Power off schedule</h5>
+                <table id="schedule-list-<%=index%>" class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>
+                        <h6>From</h6>
+                      </th>
+                      <th>
+                        <h6>to</h6>
+                      </th>
+                    </tr>
+                  </thead>
+                  <%# this will most likely give us a random order, we'll likely get away with %>
+                  <%# it though because we won't have more than 1 schedule %>
+                  <% sensor.schedules.each do |schedule| %>
+                    <tr>
+                      <%# easy way of obtaining obtain the hour and minutes + am/pm formatting %>
+                      <td><p><%=Time.local(1,1,1, schedule.start_time/60, schedule.start_time%60).strftime("%I:%M%p")%></p></td>
+                      <td><p><%=Time.local(1,1,1, schedule.end_time/60, schedule.end_time%60).strftime("%I:%M%p")%></p></td>
+                    </tr>
+                  <% end %>
+                </table>
+                <button aria-disabled="false"
+                  role="button"
+                  id= "create-schedule-<%=index%>"
+                  class= "btn btn-success ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+                  >
+                  <span class="ui-button-text">Add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
 
 <%= render "schedules" %>

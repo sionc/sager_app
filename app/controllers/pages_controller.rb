@@ -14,6 +14,10 @@ class PagesController < ApplicationController
   end
 
   def dashboard
+    # TODO: double-check that the authorization is working as intended
+    # we're not using load_and_authorize_resource here
+    # I just have to remember what the heck that does :)
+    @sensors = Sensor.accessible_by(current_ability)
   end
 
   def start

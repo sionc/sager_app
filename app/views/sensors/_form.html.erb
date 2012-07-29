@@ -14,11 +14,9 @@
     <%= f.label :label %>
     <%= f.text_field :label %>
   </div>
-  <div class="field">
+  <div class="field input-prepend">
     <%= f.label :mac_address %>
-    <input id="sensor_mac_address_prefix" disabled="disabled" name="foo" placeholder="000D6F0000" size="10" type="text" />
-    <%# <%= f.text_field :mac_address, :disabled => true, :placeholder => "000D6F0000", :size => 10 %1> %>
-    <%= f.text_field :mac_address, :maxlength => 6, :size => 6 %>
+    <span class="add-on">000D6F0000</span><%= f.text_field :mac_address, :maxlength => 6, :size => 6 %>
   </div>
   <div class="field">
     <%= f.label :enabled %>

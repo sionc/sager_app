@@ -182,6 +182,20 @@ var updateScheduleList = function(sensorId, startTime, endTime) {
     $("<td><p>"+endTime+"</p></td>").appendTo(scheduleTableBodyRow);
 };
 
+var setupBubblePopup = function(){
+    // setup bubble popup
+    $('#navbar_addsensor_link').CreateBubblePopup({
+      innerHtml: 'Welcome to PolarMeter! We noticed that you have not added a single Sensor yet. Click here to fix that!',
+      themeMargins: {total: '60px', difference: '0px'},
+      themePath: '/assets/jquerybubblepopup-themes',
+      themeName: 'blue',
+      manageMouseEvents: false})
+
+    if(document.URL.indexOf("/pages/dashboard") != -1 && !$('div[id^="sensor-container-"]').length){
+      $('#navbar_addsensor_link').ShowBubblePopup();
+    }
+}
+
 $(function() {
     setupAjax();
     initializeScheduleDialog();
@@ -189,4 +203,5 @@ $(function() {
     // registring handlers
     $('#sensor-content').click(sensorSwitchToggleHandler);
     $('#sensor-content').click(addScheduleButtonClickHandler);
+    setupBubblePopup();
 });

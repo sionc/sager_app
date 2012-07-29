@@ -16,7 +16,9 @@
   </div>
   <div class="field">
     <%= f.label :mac_address %>
-    <%= f.number_field :mac_address %>
+    <input id="sensor_mac_address_prefix" disabled="disabled" name="foo" placeholder="000D6F0000" size="10" type="text" />
+    <%# <%= f.text_field :mac_address, :disabled => true, :placeholder => "000D6F0000", :size => 10 %1> %>
+    <%= f.text_field :mac_address, :maxlength => 6, :size => 6 %>
   </div>
   <div class="field">
     <%= f.label :enabled %>

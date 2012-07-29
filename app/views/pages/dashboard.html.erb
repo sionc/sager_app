@@ -1,5 +1,9 @@
-<div id="sensor-content" class="row-fluid">
+<div id="sensor-content">
   <% @sensors.sort_by { |s| s.label }.each_with_index do |sensor, index| %>
+    <% # create a Twitter Bootstrap grid row start tag every 2 sensors %>
+    <% if index % 2 == 0%>
+      <div class="row">
+    <%end%>
     <div class="span6">
       <div id="sensor-container-<%=index%>" data-id="<%=sensor.id%>" >
         <div class="portlet ui-widget ui-widget-content ui-helper-clearfix">
@@ -93,6 +97,10 @@
         </div>
       </div>
     </div>
+    <% # create a Twitter Bootstrap grid row end tag after every odd index sensor %>
+    <% if index % 2 != 0 %>
+      </div>
+    <%end%>
   <% end %>
 </div>
 

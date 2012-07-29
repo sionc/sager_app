@@ -26,3 +26,26 @@
 .ui-widget-header-text {
  margin: 0.3em; padding: 4px;
 }
+
+// going to place this here for now, not sure where it should actually go
+.attention-tab {
+  background-color:#ff0000;
+  color:#ffffff;
+}
+
+// ---------------------------------------------------------------------------
+// Sensor new page
+// ---------------------------------------------------------------------------
+// #main-content-container {
+//   margin-left: 30%;
+//   margin-right: auto;
+// }
+
+// Shrinks input textbox for sensor mac address
+form div #sensor_mac_address_prefix {
+  width: 11ex;
+}
+
+form div #sensor_mac_address {
+  width: 7ex;
+}

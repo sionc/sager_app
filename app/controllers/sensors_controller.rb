@@ -59,10 +59,17 @@ class SensorsController < ApplicationController
   # POST /sensors.json
   def create
     @sensor = Sensor.new(params[:sensor])
+    @sensor.user_id = current_user.id
+
+    # the form will pass the last 6 alphanumerics by default since the first 10
+    # are always identical and do not need to be specified by the user
+    if(!@sensor.mac_address.nil?)
+      @sensor.mac_address = "000D6F0000" + @sensor.mac_address
+    end
 
     respond_to do |format|
       if @sensor.save
-        format.html { redirect_to @sensor, notice: 'Sensor was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Sensor was successfully created.' }
         format.json { render json: @sensor, status: :created, location: @sensor }
       else
         format.html { render action: "new" }

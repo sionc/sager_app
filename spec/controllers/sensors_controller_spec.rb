@@ -108,9 +108,9 @@ describe SensorsController do
           assigns(:sensor).should be_persisted
         end
 
-        it "redirects to the created sensor" do
+        it "redirects to dashboard" do
           post :create, {:sensor => valid_attributes}
-          response.should redirect_to(Sensor.last)
+          response.should redirect_to(root_path)
         end
       end
 

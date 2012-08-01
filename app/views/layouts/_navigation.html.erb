@@ -64,8 +64,8 @@
                    :as => resource_name,
                    :url => session_path(resource_name),
                    :html => { :class => "navbar-form pull-right" }) do |f| %>
-          <%= f.email_field :email, :class=>"input-medium", :placeholder=>"Email" %>
-          <%= f.password_field :password, :class=>"input-medium", :placeholder=>"Password" %>
+          <%= f.email_field :email, :class=>"input-medium nav-bar-inputs", :placeholder=>"Email" %>
+          <%= f.password_field :password, :class=>"input-medium nav-bar-inputs", :placeholder=>"Password" %>
           <%= f.submit "Sign in", :class => "btn btn-primary" %>
           <%# <a class="btn btn-success pull-right" href="/users/sign_up">Sign up for PolarMeter</a> %>
           <%= link_to "Sign up for PolarMeter", new_user_registration_path, :class => "btn btn-success pull-right" %>

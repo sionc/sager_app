@@ -56,8 +56,13 @@ form {
   font-weight: 700;
 }
 
-.btn-success {
+.navbar .btn-success {
   font-weight: 700;
+  line-height: 17px;
+}
+
+.nav-collapse .nav-bar-inputs {
+  margin-top: -3px;
 }
 
 /*.navbar-inner {*/

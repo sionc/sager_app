@@ -60,6 +60,7 @@ class SensorsController < ApplicationController
   def create
     @sensor = Sensor.new(params[:sensor])
     @sensor.user_id = current_user.id
+    @sensor.enabled = true
 
     # the form will pass the last 6 alphanumerics by default since the first 10
     # are always identical and do not need to be specified by the user

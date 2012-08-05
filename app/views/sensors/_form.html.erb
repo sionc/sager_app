@@ -1,3 +1,5 @@
+<div class="row">
+  <div class="span4">
 <%= form_for(@sensor) do |f| %>
   <% if @sensor.errors.any? %>
     <div id="error_explanation">
@@ -11,7 +13,7 @@
     </div>
   <% end %>
   <div class="field">
-    <%= f.label :label %>
+    <%= f.label :label, "Circle ID"%>
     <%= f.text_field :label %>
   </div>
   <div class="field input-prepend">
@@ -27,3 +29,8 @@
     <%= f.submit %>
   </div>
 <% end %>
+</div>
+<div id="span4">
+<%= image_tag("photo.JPG", :width => "350") %>
+</div>
+</div>

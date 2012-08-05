@@ -1,36 +1,36 @@
 <div class="row">
   <div class="span4">
-<%= form_for(@sensor) do |f| %>
-  <% if @sensor.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@sensor.errors.count, "error") %> prohibited this sensor from being saved:</h2>
+    <%= form_for(@sensor) do |f| %>
+      <% if @sensor.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@sensor.errors.count, "error") %> prohibited this sensor from being saved:</h2>
 
-      <ul>
-      <% @sensor.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+          <ul>
+          <% @sensor.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <div class="field">
-    <%= f.label :label, "Circle ID"%>
-    <%= f.text_field :label %>
+      <div class="field">
+        <%= f.label :label, "Circle ID"%>
+        <%= f.text_field :label %>
+      </div>
+      <div class="field input-prepend">
+        <%= f.label :mac_address %>
+        <span class="add-on">000D6F0000</span><%= f.text_field :mac_address, :maxlength => 6, :size => 6 %>
+      </div>
+      <div class="field">
+        <%= f.label :plus, "Is it a Plus Circle?" %>
+        <%= f.check_box :plus%>
+      </div>
+       <br />
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+    <% end %>
   </div>
-  <div class="field input-prepend">
-    <%= f.label :mac_address %>
-    <span class="add-on">000D6F0000</span><%= f.text_field :mac_address, :maxlength => 6, :size => 6 %>
+  <div id="span4">
+    <%= image_tag("circle_back_label.JPG", :width => "350") %>
   </div>
-  <div class="field">
-    <%= f.label :plus, "Is it a Plus Circle?" %>
-    <%= f.check_box :plus%>
-  </div>
-   <br />
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
-</div>
-<div id="span4">
-<%= image_tag("photo.JPG", :width => "350") %>
-</div>
 </div>

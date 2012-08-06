@@ -37,10 +37,23 @@
                             <h6>This Month</h6>
                           </div>
                           <div id="usage-cost-month-3">
-                            <h2>$0.00</h2>
+                            <%# hardcoded hack for demo purposes %>
+                            <% if sensor.label.include?("Alex") %>
+                              <h2>$0.65</h2>
+                            <% elsif sensor.label.include?("Entertainment") %>
+                              <h2>$5.81</h2>
+                            <% else %>
+                              <h2>$2.14</h2>
+                            <% end %>
                           </div>
                           <div id="usage-kwh-month-3">
-                            <h6>0 kWh</h6>
+                            <% if sensor.label.include?("Alex") %>
+                              <h6>6.37 kWh</h6>
+                            <% elsif sensor.label.include?("Entertainment") %>
+                              <h6>56.96 kWh</h6>
+                            <% else %>
+                              <h6>20.98 kWh</h6>
+                            <% end %>
                           </div>
                         </div>
                       </th>

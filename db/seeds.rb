@@ -36,14 +36,14 @@ circle3 = Sensor.create(:label => "Living Room Lamp",
                         :plus => false,
                         :user_id => sion_user.id)
 
-other_user = User.create(:email => 'other@polarmeter.com',
-                        :password => 'password',
-                        :demo => true)
+# other_user = User.create(:email => 'other@polarmeter.com',
+#                         :password => 'password',
+#                         :demo => true)
 
-puts "Creating demo sensors"
-circle3 = Sensor.create(:label => "Other Circle",
-                        :mac_address => "000D6F0000B81AAA",
-                        :enabled => false,
-                        :plus => true,
-                        :user_id => other_user.id)
+# puts "Creating demo sensors"
+# circle3 = Sensor.create(:label => "Other Circle",
+#                         :mac_address => "000D6F0000B81AAA",
+#                         :enabled => false,
+#                         :plus => true,
+#                         :user_id => other_user.id)
 puts "Seed complete!"

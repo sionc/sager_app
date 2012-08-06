@@ -196,6 +196,13 @@ var setupBubblePopup = function(){
     }
 }
 
+// Update current month usage data
+var updateCurrentMonthUsageData = function (sensorId) {
+   var usage = 20000 + parseInt(Math.floor(Math.random()*28897));
+   $("<h2>$"+((usage/1000) * 0.15).toFixed(2)+"</h2>").appendTo("#usage-cost-month-"+sensorId.toString());
+   $("<h6>"+usage+" watt hours</h6>").appendTo("#usage-kwh-month-"+sensorId.toString());
+};
+
 $(function() {
     setupAjax();
     initializeScheduleDialog();

@@ -19,19 +19,24 @@ sion_user = User.create(:email => 'sion@polarmeter.com',
                         :demo => true)
 
 puts "Creating demo sensors"
-circle1 = Sensor.create(:label => "Alex's Iron",
-                        :mac_address => "000D6F0000B81AB9",
+
+circle1 = Sensor.create(:label => "Entertainment Center",
+                        :mac_address => "000D6F0000B81A42",
                         :enabled => true,
-                        :plus => true,
+                        :plus => false,
                         :user_id => sion_user.id)
-circle2 = Sensor.create(:label => "Entertainment Center",
+circle2 = Sensor.create(:label => "Living Room Lamp",
                         :mac_address => "000D6F0000B81A41",
                         :enabled => true,
                         :plus => false,
                         :user_id => sion_user.id)
-
-circle3 = Sensor.create(:label => "Living Room Lamp",
-                        :mac_address => "000D6F0000B81A42",
+circle3 = Sensor.create(:label => "Alex's Iron",
+                        :mac_address => "000D6F0000B81AB9",
+                        :enabled => true,
+                        :plus => true,
+                        :user_id => sion_user.id)
+circle4 = Sensor.create(:label => "Coffee Maker",
+                        :mac_address => "000D6F0000B81AB8",
                         :enabled => true,
                         :plus => false,
                         :user_id => sion_user.id)
